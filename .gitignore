@@ -2,6 +2,8 @@
 __pycache__
 .mypy_cache
 .pytest_cache
+.vscode
+.ipynb_checkpoints
 
 # Local configuration: machine-specific paths and settings.
 # .env.example is committed and documents every variable.
