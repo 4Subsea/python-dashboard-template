@@ -1,0 +1,18 @@
+# What the dashboard needs to run.
+#   pip install -r requirements.txt
+#
+# See requirements-dev.txt for tests and formatting, and
+# requirements-notebooks.txt for the notebooks.
+#
+# Minimum versions, verified working together.
+# To lock exact versions for a deploy: pip freeze > requirements.lock.txt
+
+dash>=3.0
+dash_bootstrap_components>=2.0
+dash_ag_grid>=31.0
+plotly>=6.0
+
+pandas>=2.0
+numpy>=1.26
+
+python-dotenv>=1.0     # reads .env in config.py; see .env.example

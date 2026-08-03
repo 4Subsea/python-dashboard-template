@@ -1,0 +1,419 @@
+/* ==========================================================================
+   4Subsea PBI style guide
+   https://miro.com/app/board/uXjVHbD9HV0=/
+   ========================================================================== */
+
+:root {
+  /* FONT */
+  --font-main: 'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;
+
+  /* COLORS, UI */
+  --border-grey-1: #e6e6e6;
+  --border-grey-2: #d2d3ce;
+  --light-grey:    #f8f9fa;
+  --grey:          #a8a9a5;
+  --dark-grey:     #7e7f7c;
+  --dark-blue:     #012b5d;
+  --turquoise:     #00a0b0;
+  --body-text:     #002023;
+
+  /* COLORS, data (use them in this order) */
+  --data-1:  #012b5d;
+  --data-2:  #00a0b0;
+  --data-3:  #f3776f;
+  --data-4:  #feb272;
+  --data-5:  #a8a9a5;
+  --data-6:  #87d8f8;
+  --data-7:  #bdf4eb;
+  --data-8:  #8e00b0;
+  --data-9:  #716fb3;
+  --data-10: #95b000;
+
+  /* TYPE SCALE — guide sizes are points, rendered here at 1.6x as pixels.
+     Keep in step with SCALE in theme.py. */
+  --size-axis-value:  13px;  /*  8 */
+  --size-axis-title:  14px;  /*  9 */
+  --size-table-head:  14px;  /*  9 */
+  --size-body:        16px;  /* 10 */
+  --size-title:       19px;  /* 12 */
+  --size-page-title:  34px;
+
+  /* LAYOUT */
+  --gap: 16px;               /* "two spaces between visuals" */
+  --radius: 4px;
+  --max-width: 1800px;       /* content stops filling very wide monitors */
+  --narrow-width: 1100px;    /* pages of small tables, which look lost at full width */
+  --sidebar-width: 200px;    /* fits "Fatigue life along cable" on one line */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main) !important;
+  color: var(--body-text);
+  background-color: #ffffff;
+  font-size: var(--size-body);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* --------------------------------------------------------------------------
+   Page shell
+   -------------------------------------------------------------------------- */
+
+/* Sidebar beside content, rather than a title and tabs stacked above it.
+   4insight's header already takes 84px off the top, so the page spends its
+   remaining height on results and its width on navigation. */
+
+.shell {
+  display: flex;
+  align-items: stretch;
+  min-height: 100%;
+}
+
+.sidebar {
+  flex: 0 0 var(--sidebar-width);
+  border-right: 1px solid var(--border-grey-1);
+  padding: 20px 0;
+  background: #ffffff;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-width: 0; /* or wide grids push the sidebar off-screen instead of scrolling */
+  max-width: var(--max-width);
+  padding: 20px 28px 32px;
+}
+
+/* Left-aligned, not centred, so the page starts where every other page does. */
+.narrow-page {
+  max-width: var(--narrow-width);
+}
+
+/* Development aid, shown only when MOCK_PLATFORM_CHROME is set. Stands in for
+   4insight's header so the space left for the app matches the real embedding.
+   Heights come from config, not from here. */
+
+/* The real header is a 44px dark nav with the logo top left, then a 38px
+   breadcrumb carrying the page title. Stacking the logo row above the title
+   mirrors that, so the stand-in sits where the real one does. */
+.mock-4insight {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 18px 0;
+  background: #16191c;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.mock-4insight-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.mock-4insight-logo {
+  display: block;
+  height: 22px;
+  width: auto;
+}
+
+.mock-4insight-note {
+  line-height: 22px;
+  color: #6b7075; /* quiet: it is a note to the developer, not part of the design */
+}
+
+/* Stands in for the dashboard name 4insight's real header renders here,
+   below the logo row - bigger and bolder, as a page title reads. */
+.mock-4insight-title {
+  margin-top: 2px;
+  font-size: 20px;
+  line-height: 1.3;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.mock-4insight-bottom-bar {
+  background: #e9edf1;
+}
+
+/* --------------------------------------------------------------------------
+   Headings
+   -------------------------------------------------------------------------- */
+
+/* The page title lives in 4insight's header, not in the app. --size-page-title
+   is kept for anything that needs a large heading later. */
+
+/* Footnote under a visual: small, dark grey, sits inside the visual border */
+.footnote {
+  margin-top: 10px;
+  font-size: var(--size-axis-title);
+  color: var(--dark-grey);
+}
+
+.footnote sub {
+  font-size: 0.75em;
+}
+
+/* --------------------------------------------------------------------------
+   Navigator tabs
+   selected      : size 12, dark blue, 2px dark blue rule
+   default/hover : size 12, turquoise, 2px border grey 2 rule
+   -------------------------------------------------------------------------- */
+
+/* Tabs are sized to their labels and left aligned; the grey rule runs the full
+   width behind them so the active tab reads as a segment of it. */
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-link {
+  padding: 9px 18px 9px 15px;
+  font-size: var(--size-title);
+  line-height: 1.25;
+  color: var(--turquoise);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: color 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
+}
+
+.sidebar-link:hover {
+  color: var(--turquoise);
+  background: var(--light-grey, #f4f6f8);
+  border-left-color: var(--turquoise);
+}
+
+.sidebar-link--active,
+.sidebar-link--active:hover {
+  color: var(--dark-blue);
+  font-weight: 700;
+  background: transparent;
+  border-left-color: var(--dark-blue);
+}
+
+/* One heading style shared by visual titles and slicer headers, so a slicer
+   sitting in a row of tables matches them.
+   The guide's visual title is size 12 grey and regular weight; this is bolder
+   and darker for legibility. To follow the guide, set
+   font-weight: 400 and color: var(--grey). */
+.visual-title,
+.slicer-header {
+  font-size: var(--size-title);
+  font-weight: 700;
+  color: var(--dark-grey);
+  margin-bottom: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Visual container — border 1px, corners 4px, border grey 1
+   -------------------------------------------------------------------------- */
+
+.visual {
+  border: 1px solid var(--border-grey-1);
+  border-radius: var(--radius);
+  padding: 12px;
+  background-color: #ffffff;
+}
+
+/* AG Grid reserves 150px of body height in autoHeight mode, to leave room for
+   the "no rows" overlay. Every small table therefore drew the same tall box
+   whether it held one row or ten, which read as half-empty panels. These grids
+   are never empty - the data is committed alongside the app - so the reserve
+   is dead space. */
+.visual .ag-center-cols-viewport,
+.visual .ag-body-viewport {
+  min-height: 0 !important;
+}
+
+.row-gap {
+  margin-bottom: var(--gap);
+}
+
+/* --------------------------------------------------------------------------
+   Slicers
+   The guide gives slicers a light grey background to set them apart from
+   visuals; here they share the white visual container so a slicer sitting in
+   a row of tables does not look like the odd one out.
+   Swap background-color to var(--light-grey) to follow the guide instead.
+   -------------------------------------------------------------------------- */
+
+.slicer {
+  background-color: #ffffff;
+  border: 1px solid var(--border-grey-1);
+  border-radius: var(--radius);
+  padding: 12px;
+  height: 100%;
+
+  /* Sections side by side, not stacked: the panel spans the full width now
+     that the reference tables have moved to the Info page, and height is the
+     scarce dimension inside the 4insight frame. Wraps to a second row rather
+     than squeezing when a narrow window cannot fit them all. */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 40px;
+  row-gap: 14px;
+}
+
+.slicer-section {
+  flex: 0 1 auto;
+}
+
+/* A vertical rule between groups, so five sets of radio buttons on one line
+   still read as five separate questions. */
+.slicer-section + .slicer-section {
+  padding-left: 40px;
+  margin-left: -20px;
+  border-left: 1px solid var(--border-grey-1);
+}
+
+/* Panel in a narrow column beside the content: groups run down the page, and
+   the vertical rules would be stray marks down the left, so they go. */
+.slicer--stacked {
+  flex-direction: column;
+  column-gap: 0;
+  row-gap: 16px;
+}
+
+.slicer--stacked .slicer-section + .slicer-section {
+  padding-left: 0;
+  margin-left: 0;
+  border-left: none;
+}
+
+/* Column beside the plot: equal-height panels.
+   A grid with two 1fr rows, not flex - the column has no fixed height, so
+   flex-basis 0 would collapse both panels to nothing. Equal 1fr rows in an
+   auto-height grid both take the height of the taller one. */
+.side-stack {
+  display: grid;
+  grid-auto-rows: 1fr; /* however many panels, all the height of the tallest */
+  gap: var(--gap);
+  align-content: start;
+}
+
+.slicer .form-check-label,
+.slicer .form-check-input {
+  font-size: var(--size-body);
+  color: var(--body-text);
+  cursor: pointer;
+}
+
+.slicer .form-check-inline {
+  margin-right: 1rem;
+}
+
+.slicer .form-check-input:checked {
+  background-color: var(--dark-blue);
+  border-color: var(--dark-blue);
+}
+
+.slicer .form-check-input:focus {
+  border-color: var(--turquoise);
+  box-shadow: 0 0 0 0.15rem rgba(0, 160, 176, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Tables (AG Grid)
+   top border 2px dark grey · inner 1px grey · headers size 9 dark grey
+   alternating rows light grey · no gridlines · values size 8-10 body text
+   -------------------------------------------------------------------------- */
+
+.ag-theme-balham {
+  --ag-font-family: var(--font-main);
+  --ag-font-size: var(--size-body);
+  --ag-foreground-color: var(--body-text);
+  --ag-background-color: #ffffff;
+  --ag-odd-row-background-color: var(--light-grey);
+  --ag-header-background-color: #ffffff;
+  --ag-header-foreground-color: var(--dark-grey);
+  --ag-border-color: transparent;
+  --ag-row-border-color: transparent;
+  --ag-borders: none;
+  --ag-header-column-separator-display: none;
+  --ag-header-column-resize-handle-display: none;
+  --ag-row-hover-color: rgba(0, 160, 176, 0.06);
+  --ag-selected-row-background-color: rgba(1, 43, 93, 0.06);
+  --ag-grid-size: 5px;
+  border-top: 2px solid var(--dark-grey) !important;
+}
+
+.ag-theme-balham .ag-header {
+  border-bottom: 1px solid var(--grey);
+  font-size: var(--size-table-head);
+  font-weight: 700;
+}
+
+.ag-theme-balham .ag-header-cell-text,
+.ag-theme-balham .ag-header-group-text {
+  font-size: var(--size-table-head);
+  color: var(--dark-grey);
+}
+
+/* Group header spanning several columns: centred with a hairline underneath */
+.ag-theme-balham .ag-header-group-cell-label {
+  justify-content: center;
+}
+
+.ag-theme-balham .ag-header-group-cell:not(.ag-header-group-cell-no-group) {
+  border-bottom: 1px solid var(--border-grey-1);
+}
+
+.ag-theme-balham .ag-cell {
+  font-size: var(--size-body);
+  color: var(--body-text);
+}
+
+/* Remove the fallback minimum height constraints when using autoHeight */
+.ag-center-cols-clipper,
+.ag-center-cols-container {
+  min-height: 0px !important;
+}
+
+/* --------------------------------------------------------------------------
+   Plotly modebar (zoom / pan / reset)
+   Left in Plotly's default top-right corner. That used to collide with the
+   legend, but the legend is now a vertical block starting at the top of the
+   plot area, so the controls sit above it in the top margin, opposite the
+   title. Styled to read as chrome rather than data.
+   -------------------------------------------------------------------------- */
+
+.js-plotly-plot .modebar--horizontal {
+  border: 1px solid var(--border-grey-1);
+  border-radius: var(--radius);
+  background-color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Misc
+   -------------------------------------------------------------------------- */
+
+img {
+  width: 100%;
+  display: block;
+}
+
+input[type=submit], button {
+  background-color: var(--turquoise);
+  color: #ffffff;
+  border: none;
+  min-height: 32px;
+  width: 200px;
+  border-radius: var(--radius);
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: var(--size-body);
+}
+
+input[type=submit]:hover, button:hover {
+  background-color: var(--dark-blue);
+}
+
+input[type=submit]:disabled,
+input[disabled] {
+  border: 1px solid var(--border-grey-2);
+  background-color: var(--border-grey-1);
+  color: var(--grey);
+}
