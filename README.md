@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Python Dashboard Template
 
 A starting point for Plotly Dash dashboards: one theme, one working example
