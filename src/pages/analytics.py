@@ -52,6 +52,7 @@ def layout():
     )
 
 
+# Callback to update the chart based on the selected category. Note that the callback is a decorator that takes the output and input components as arguments. The function itself takes the input value and returns the updated figure.
 @callback(
     Output("analytics-chart", "figure"),
     Input("analytics-category-filter", "value"),

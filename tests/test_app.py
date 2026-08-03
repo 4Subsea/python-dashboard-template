@@ -116,24 +116,20 @@ def test_figures_are_json_serialisable():
 # ---------------------------------------------------------------------------
 
 
-def test_the_mock_header_is_absent_unless_configured():
+def test_the_mock_header_is_absent_unless_configured(monkeypatch):
     """It must never render on the server, where the real header already exists."""
-    import config
-
-    assert config.MOCK_PLATFORM_CHROME == 0 or app.mock_4insight() != ([], [])
-    if config.MOCK_PLATFORM_CHROME == 0:
-        assert app.mock_4insight() == ([], [])
+    monkeypatch.setattr(app, "MOCK_PLATFORM_CHROME", 0)
+    assert app.mock_4insight() == ([], [])
 
 
 def test_the_mock_header_carries_the_logo_and_placeholder_title_when_configured(monkeypatch):
-    import config
-
-    monkeypatch.setattr(config, "MOCK_PLATFORM_CHROME", 84)
+    monkeypatch.setattr(app, "MOCK_PLATFORM_CHROME", 82)
+    monkeypatch.setattr(app, "MOCK_PLATFORM_GAP", 20)
     (bar,), (bottom_bar,) = app.mock_4insight()
     top_row, title = bar.children
     logo, note = top_row.children
     assert logo.src.endswith("4insight_logo.png")
     assert text_of(title) == "Placeholder title"
     assert text_of(note) == "simulated header — not part of the app"
-    assert bar.style["height"] == "84px"
-    assert bottom_bar.style["height"] == f"{config.MOCK_PLATFORM_GAP}px"
+    assert bar.style["height"] == "82px"
+    assert bottom_bar.style["height"] == "20px"

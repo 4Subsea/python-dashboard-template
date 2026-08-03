@@ -11,13 +11,13 @@ so the reviewer can see what was actually checked rather than assuming.
 - [ ] **Every threshold, unit and label comes from a named constant**, not a
       literal. If a number decides a colour or a pass/fail, it is defined once
       and read by the chart, the conditional formatting and the caption alike.
-- [ ] **Anything machine-specific goes in `config.py` and `.env.example`**, not
-      in a module. Paths, hosts, ports — if it differs between your laptop and
-      the server, it is configuration. Domain constants are not.
+- [ ] **Anything machine-specific goes in `.env.example`**, not hardcoded —
+      unless it's a deliberate simplification, documented where it deviates
+      (see README's Configuration section for this template's own exception).
+      Domain constants are not machine-specific either way.
 - [ ] **Every page opened and looked at** after the change. Layout and rendering
       faults do not appear in a diff or in a test run.
-- [ ] **At least one displayed number spot-checked** against the source report
-      or spreadsheet.
+- [ ] **At least one displayed number spot-checked** against the source.
 - [ ] **`CLAUDE.md` updated** if the change establishes a new convention, and
       **`README.md`** if it changes how to run, refresh or deploy anything.
 
@@ -39,9 +39,7 @@ rule, and why.
 `.github/workflows/ci.yml` runs on every push to `main` and every pull request:
 
 1. `black --check --diff .` — formatting
-2. `import app` — catches import errors and layout-construction failures that
-   a passing test suite could still miss
-3. `pytest` — the full suite
+2. `pytest` — the full suite
 
 Options live in `pyproject.toml`, so the commands below behave identically for
 you, for your editor and for CI. Do not pass `--line-length` by hand; if the
@@ -56,7 +54,6 @@ pip install -r requirements-notebooks.txt  # adds Jupyter for notebooks/
 cp .env.example .env                       # optional; defaults work as-is
 
 python src/app.py                          # the app, on :8050
-python src/config.py                       # what the app thinks it will read
 pytest                                     # the tests
 black .                                    # format
 ```

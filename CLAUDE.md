@@ -2,7 +2,6 @@
 python-dashboard-template/
 ├── src/
 │   ├── app.py             # Main application file
-│   ├── config.py          # Settings read from the environment; see .env.example
 │   ├── theme.py            # Colours, type scale and the Plotly template
 │   ├── assets/            # Static files (CSS, images, sample data)
 │   └── pages/             # One module per page, each with dash.register_page
@@ -13,7 +12,7 @@ python-dashboard-template/
 ├── requirements.txt       # Python dependencies
 ├── requirements-dev.txt   # + pytest, black
 ├── requirements-notebooks.txt  # + Jupyter
-├── .env.example           # Every setting, documented; copy to .env to override
+├── .env.example           # The mock-header toggle, documented; copy to .env to override
 ├── .github/                # CI workflow + PR template
 ├── README.md
 ├── CONTRIBUTING.md

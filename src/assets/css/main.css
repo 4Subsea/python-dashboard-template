@@ -43,7 +43,7 @@
   --radius: 4px;
   --max-width: 1800px;       /* content stops filling very wide monitors */
   --narrow-width: 1100px;    /* pages of small tables, which look lost at full width */
-  --sidebar-width: 200px;    /* fits "Fatigue life along cable" on one line */
+  --sidebar-width: 200px;
 }
 
 body {
@@ -62,7 +62,7 @@ body {
    -------------------------------------------------------------------------- */
 
 /* Sidebar beside content, rather than a title and tabs stacked above it.
-   4insight's header already takes 84px off the top, so the page spends its
+   4insight's header already takes 82px off the top, so the page spends its
    remaining height on results and its width on navigation. */
 
 .shell {
@@ -92,7 +92,7 @@ body {
 
 /* Development aid, shown only when MOCK_PLATFORM_CHROME is set. Stands in for
    4insight's header so the space left for the app matches the real embedding.
-   Heights come from config, not from here. */
+   Heights come from app.py, not from here. */
 
 /* The real header is a 44px dark nav with the logo top left, then a 38px
    breadcrumb carrying the page title. Stacking the logo row above the title
@@ -126,8 +126,8 @@ body {
 /* Stands in for the dashboard name 4insight's real header renders here,
    below the logo row - bigger and bolder, as a page title reads. */
 .mock-4insight-title {
-  margin-top: 2px;
-  font-size: 20px;
+  margin-top: 4px;
+  font-size: 30px;
   line-height: 1.3;
   color: #ffffff;
   font-weight: 700;
@@ -216,6 +216,16 @@ body {
   background-color: #ffffff;
 }
 
+/* Filter panel — used by the Analytics page's dropdown filter. Just the box
+   and heading style; the original multi-section/radio-group slicer layout
+   isn't here, because nothing in this template uses more than one filter. */
+.slicer {
+  background-color: #ffffff;
+  border: 1px solid var(--border-grey-1);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
 /* AG Grid reserves 150px of body height in autoHeight mode, to leave room for
    the "no rows" overlay. Every small table therefore drew the same tall box
    whether it held one row or ten, which read as half-empty panels. These grids
@@ -228,90 +238,6 @@ body {
 
 .row-gap {
   margin-bottom: var(--gap);
-}
-
-/* --------------------------------------------------------------------------
-   Slicers
-   The guide gives slicers a light grey background to set them apart from
-   visuals; here they share the white visual container so a slicer sitting in
-   a row of tables does not look like the odd one out.
-   Swap background-color to var(--light-grey) to follow the guide instead.
-   -------------------------------------------------------------------------- */
-
-.slicer {
-  background-color: #ffffff;
-  border: 1px solid var(--border-grey-1);
-  border-radius: var(--radius);
-  padding: 12px;
-  height: 100%;
-
-  /* Sections side by side, not stacked: the panel spans the full width now
-     that the reference tables have moved to the Info page, and height is the
-     scarce dimension inside the 4insight frame. Wraps to a second row rather
-     than squeezing when a narrow window cannot fit them all. */
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  column-gap: 40px;
-  row-gap: 14px;
-}
-
-.slicer-section {
-  flex: 0 1 auto;
-}
-
-/* A vertical rule between groups, so five sets of radio buttons on one line
-   still read as five separate questions. */
-.slicer-section + .slicer-section {
-  padding-left: 40px;
-  margin-left: -20px;
-  border-left: 1px solid var(--border-grey-1);
-}
-
-/* Panel in a narrow column beside the content: groups run down the page, and
-   the vertical rules would be stray marks down the left, so they go. */
-.slicer--stacked {
-  flex-direction: column;
-  column-gap: 0;
-  row-gap: 16px;
-}
-
-.slicer--stacked .slicer-section + .slicer-section {
-  padding-left: 0;
-  margin-left: 0;
-  border-left: none;
-}
-
-/* Column beside the plot: equal-height panels.
-   A grid with two 1fr rows, not flex - the column has no fixed height, so
-   flex-basis 0 would collapse both panels to nothing. Equal 1fr rows in an
-   auto-height grid both take the height of the taller one. */
-.side-stack {
-  display: grid;
-  grid-auto-rows: 1fr; /* however many panels, all the height of the tallest */
-  gap: var(--gap);
-  align-content: start;
-}
-
-.slicer .form-check-label,
-.slicer .form-check-input {
-  font-size: var(--size-body);
-  color: var(--body-text);
-  cursor: pointer;
-}
-
-.slicer .form-check-inline {
-  margin-right: 1rem;
-}
-
-.slicer .form-check-input:checked {
-  background-color: var(--dark-blue);
-  border-color: var(--dark-blue);
-}
-
-.slicer .form-check-input:focus {
-  border-color: var(--turquoise);
-  box-shadow: 0 0 0 0.15rem rgba(0, 160, 176, 0.25);
 }
 
 /* --------------------------------------------------------------------------

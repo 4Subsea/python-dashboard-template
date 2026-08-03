@@ -14,9 +14,8 @@ not because they were already ticked. See `CONTRIBUTING.md` for why each is here
 - [ ] `pytest` passes
 - [ ] `black` is clean
 - [ ] Every threshold, unit and label comes from a named constant, not a literal
-- [ ] Anything machine-specific is in `config.py` and `.env.example`, not in a module
-- [ ] Malformed input fails loudly — if this touches data loading, a missing file
-      or a shifted spreadsheet raises with a message naming the file
+- [ ] Anything machine-specific is in `.env.example`, not hardcoded (unless it's
+      a documented, deliberate simplification - see README)
 - [ ] Every page opened and looked at after the change
 - [ ] At least one displayed number spot-checked against the source
 - [ ] `CLAUDE.md` updated if this establishes a new convention, `README.md` if it

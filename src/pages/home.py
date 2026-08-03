@@ -1,7 +1,11 @@
-"""Landing page: intro text and the full sample dataset in an AgGrid.
+"""
+Landing page
+------------
 
-Minimal example of the required AgGrid config from CLAUDE.md and of loading
-data inside a page-layout function rather than at import time.
+This is the "Home" page, which is the first page users see when they open the app.
+It contains a table of sample data fetched from the "assets/sample_data.csv" file.
+The table is implemented using the Dash AG Grid component, which allows for filtering, sorting, and pagination.
+
 """
 
 import pathlib

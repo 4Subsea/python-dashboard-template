@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 # Python Dashboard Template
 
 A starting point for Plotly Dash dashboards: one theme, one working example
 page and one filterable-chart page, a mock-up of 4insight's header for local
 layout work, and the process scaffolding (CI, PR template, `CLAUDE.md`
-conventions) already wired up.
+conventions) set up.
 
 To start a new project from this template: clone or copy it, replace
 `src/assets/sample_data.csv` and the two pages in `src/pages/` with your own,
@@ -29,40 +28,25 @@ the app.
 
 ## Configuration
 
-Everything that differs between a laptop, the server and CI comes from the
-environment. With no configuration at all the app runs from the repo exactly
-as above, so a fresh clone needs no setup.
+There isn't much. Two variables come from `.env` (copy `.env.example` and
+edit it; `.env` is gitignored):
 
-To change something, copy `.env.example` to `.env` in the repo root and edit
-it. `.env.example` documents every variable; `.env` is gitignored, so your
-settings stay on your machine. A variable set in the real environment beats
-the file, which is how a server or a CI job configures itself without one.
+- `DASH_DEBUG` - the one setting with a security consequence, so it stays
+  configurable rather than hardcoded. Keep it `true` on your own laptop for
+  hot reloading; set it `false` on anything anyone else can reach - the debug
+  console executes Python on the host.
+- `MOCK_PLATFORM_CHROME` (and `MOCK_PLATFORM_GAP`) - see "Fitting the
+  4insight frame" below. A personal, not-committed toggle rather than a
+  machine-specific setting.
 
-```bash
-python src/config.py     # what the app will actually use, without starting it
-```
-
-Only two normally change:
-
-| Variable | Laptop | Server |
-|---|---|---|
-| `DASH_DEBUG` | `true` | **`false`** — the debug console executes Python on the host |
-| `DASH_HOST` | `127.0.0.1` | `0.0.0.0`, or nothing outside the machine can reach it |
-
-Setting `DASH_HOST=0.0.0.0` with `DASH_DEBUG=false` is also how you let
-colleagues on the office network open your laptop's copy, at
-`http://<your-ip>:8050`.
-
-What is *not* configurable, deliberately: domain constants that never change
-between machines. Configuration is what differs between where the app runs;
-everything else stays in Python, next to the code that uses it.
+Host and port aren't configurable - `app.run(debug=DASH_DEBUG)` uses Dash's
+own defaults (`127.0.0.1:8050`). 
 
 ## Layout
 
 ```
 src/
 ├── app.py            Dash shell: side navigation, mock 4insight header
-├── config.py         everything that differs between laptop, server and CI
 ├── theme.py          colours, type scale and the Plotly template
 ├── pages/
 │   ├── home.py       example: an AgGrid over the sample data
@@ -72,34 +56,25 @@ src/
     ├── 4insight_logo.png
     └── sample_data.csv
 
-notebooks/            ad-hoc exploration, outside the running app
+notebooks/            any notebooks used for exploration, sandboxing. Outside the running app.
 tests/                pytest suite
 .github/              CI workflow + PR template
-.env.example          every setting, documented; copy to .env to override
+.env.example          Example .env file; copy to .env to override
 ```
 
 Pages register themselves with `dash.register_page`, and the sidebar is built
 from `dash.page_registry` — adding a page means adding one file in `pages/`,
 with nothing else to update.
 
-There's no separate `data.py`/`components.py`/`figures.py` layer here — with
-two pages and a small sample dataset it would be more indirection than it's
-worth. As a real project's pages start repeating the same loading, filtering
-or figure-building code, that's the point to pull the shared logic into its
-own module.
 
 ## Fitting the 4insight frame
 
 Real deployments serve this app inside an iframe on 4insight, under a header
-that takes 84px, with 24px of dead space below the frame. Set
-`MOCK_PLATFORM_CHROME=84` in `.env` and the app reserves the same space
+that takes 82 px, with 20 px of dead space below the frame. Set
+`MOCK_PLATFORM_CHROME=82` in `.env` and the app reserves the same space
 locally — the bar shows the 4insight logo and a "Placeholder title" standing
 in for where 4insight's own header names the dashboard, plus a small dev note
-so nobody mistakes the bar for real UI. Two decisions follow from it:
-
-- **No page title in the app.** 4insight's header already names the dashboard.
-- **Navigation is a sidebar**, not a row of tabs. Width is the plentiful
-  dimension inside the frame; height is not.
+so nobody mistakes the bar for real UI. 
 
 ## Styling / theming
 
@@ -132,17 +107,16 @@ pytest
 ```
 
 Covers page registration, that each page's layout builds, that every
-callback's component IDs actually exist in its page, the mock header, and the
-configuration layer — including that `.env.example` documents exactly the
-variables `config.py` reads, no more and no fewer.
+callback's component IDs actually exist in its page, and the mock header
+(absent by default, carries the logo and placeholder title when configured).
 
 ## Contributing
 
 `CONTRIBUTING.md` holds the definition of done — the checklist every change
 ticks before it is merged. It appears automatically on every pull request.
 
-CI runs black, an import check and the full test suite on every push to
-`main` and every pull request.
+CI runs black and the full test suite on every push to `main` and every pull
+request.
 
 ## Conventions
 

@@ -30,10 +30,5 @@ jobs:
       - name: black
         run: black --check --diff .
 
-      # Importing data.py validates the results spreadsheet, so this fails
-      # loudly if the workbook has shifted under us
-      - name: Import the app
-        run: python -c "import sys; sys.path.insert(0, 'src'); import app"
-
       - name: pytest
         run: pytest

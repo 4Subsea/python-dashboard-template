@@ -5,21 +5,29 @@ pages/ and registers itself with dash.register_page, so adding a page means
 adding one file and nothing else.
 """
 
+import os
+import pathlib
+
 import dash
 from dash import Dash, html, dcc, callback, Output, Input
 import dash_bootstrap_components as dbc
-
-import config
+from dotenv import load_dotenv
 
 PAGE_TITLE = "Dashboard Template"
 
-# suppress_callback_exceptions: only the current page's components are in the
-# DOM, so the other pages' callback targets are absent until you navigate.
+# Read environment variables from .env in the repo root, if present
+load_dotenv(pathlib.Path(__file__).resolve().parents[1] / ".env", override=False)
+
+# Load environemnt variables into globals
+DASH_DEBUG = os.getenv("DASH_DEBUG", "true").strip().lower() == "true"
+MOCK_PLATFORM_CHROME = int(os.getenv("MOCK_PLATFORM_CHROME", "0") or 0)
+MOCK_PLATFORM_GAP = int(os.getenv("MOCK_PLATFORM_GAP", "20") or 20)
+
 app = Dash(
     __name__,
     use_pages=True,
     external_stylesheets=[dbc.themes.BOOTSTRAP],
-    suppress_callback_exceptions=True,
+    suppress_callback_exceptions=True,  # Set true for multi-page apps to avoid raising exceptions.
     title=PAGE_TITLE,
 )
 
@@ -46,13 +54,13 @@ def nav_bar(pathname):
 def mock_4insight():
     """A stand-in for 4insight's header, so local screens match the real thing.
 
-    Off unless MOCK_PLATFORM_CHROME is set - see config.py. Returns the bar and
-    the dead space below the iframe, both of which eat into the height a page
-    has to work with. "Placeholder title" stands in for the dashboard name
-    4insight's real header renders there, below the logo row - matching the
-    real header's 44px nav + 38px breadcrumb stack.
+    Off unless MOCK_PLATFORM_CHROME is set - see .env.example. Returns the bar
+    and the dead space below the iframe, both of which eat into the height a
+    page has to work with. "Placeholder title" stands in for the dashboard
+    name 4insight's real header renders there, below the logo row - matching
+    the real header's 44px nav + 38px breadcrumb stack.
     """
-    if not config.MOCK_PLATFORM_CHROME:
+    if not MOCK_PLATFORM_CHROME:
         return [], []
     bar = html.Div(
         [
@@ -73,20 +81,18 @@ def mock_4insight():
             html.Span("Placeholder title", className="mock-4insight-title"),
         ],
         className="mock-4insight",
-        style={"height": f"{config.MOCK_PLATFORM_CHROME}px"},
+        style={"height": f"{MOCK_PLATFORM_CHROME}px"},
     )
     bottom_bar = html.Div(
         className="mock-4insight-bottom-bar",
-        style={"height": f"{config.MOCK_PLATFORM_GAP}px"},
+        style={"height": f"{MOCK_PLATFORM_GAP}px"},
     )
     return [bar], [bottom_bar]
 
 
 _mock_bar, _mock_bottom_bar = mock_4insight()
 
-# No page title on the page itself: 4insight's own header names the dashboard,
-# and 34px of heading is 34px not spent on content. It stays as the browser
-# tab title, set on the Dash constructor above.
+# App layout
 app.layout = html.Div(
     _mock_bar
     + [
@@ -105,12 +111,10 @@ app.layout = html.Div(
 
 @callback(Output("nav-bar", "children"), Input("url", "pathname"))
 def highlight_active_tab(pathname):
-    """Dash Pages handles the routing; this only marks which tab is current."""
+    """Function to highlight the active tab in the sidebar based on the current URL path."""
     return nav_bar(pathname)
 
 
 if __name__ == "__main__":
-    # All three come from the environment; see config.py and .env.example.
-    # On any shared machine set DASH_DEBUG=false - the debug console executes
-    # Python on the host.
-    app.run(debug=config.DASH_DEBUG, host=config.DASH_HOST, port=config.DASH_PORT)
+    # Run the app. Set DASH_DEBUG in .env to toggle debug mode.
+    app.run(debug=DASH_DEBUG)

@@ -78,12 +78,6 @@ def rgba(hex_color, alpha):
     return f"rgba({r},{g},{b},{alpha})"
 
 
-# Background shapes are context, not data. CPS uses a late palette entry; the
-# rock band deliberately departs from the guide and uses a UI grey.
-CPS_FILL = rgba(COLORS[6], 0.60)  # mint
-ROCK_FILL = BORDER_GREY_1  # #e6e6e6
-
-
 def make_template() -> go.layout.Template:
     axis = dict(
         showgrid=True,
@@ -158,5 +152,5 @@ def register_theme(set_as_default: bool = True) -> None:
         pio.templates.default = "4subsea"
 
 
-# Registered on import so no caller has to remember to do it
+# Register theme on import so that themes are available after import wihout needing to call register_theme()
 register_theme()

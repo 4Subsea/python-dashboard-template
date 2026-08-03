@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pip install --upgrade \"pandas==3.0.5\" \"numpy==2.5.1\")",
+      "Bash(pytest)",
+      "Bash(black --check --diff .)"
+    ]
+  }
+}
