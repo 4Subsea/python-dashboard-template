@@ -5,44 +5,52 @@
 
 :root {
   /* FONT */
-  --font-main: 'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;
+  --font-main: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
 
   /* COLORS, UI */
   --border-grey-1: #e6e6e6;
   --border-grey-2: #d2d3ce;
-  --light-grey:    #f8f9fa;
-  --grey:          #a8a9a5;
-  --dark-grey:     #7e7f7c;
-  --dark-blue:     #012b5d;
-  --turquoise:     #00a0b0;
-  --body-text:     #002023;
+  --light-grey: #f8f9fa;
+  --grey: #a8a9a5;
+  --dark-grey: #7e7f7c;
+  --dark-blue: #012b5d;
+  --turquoise: #00a0b0;
+  --body-text: #002023;
 
   /* COLORS, data (use them in this order) */
-  --data-1:  #012b5d;
-  --data-2:  #00a0b0;
-  --data-3:  #f3776f;
-  --data-4:  #feb272;
-  --data-5:  #a8a9a5;
-  --data-6:  #87d8f8;
-  --data-7:  #bdf4eb;
-  --data-8:  #8e00b0;
-  --data-9:  #716fb3;
+  --data-1: #012b5d;
+  --data-2: #00a0b0;
+  --data-3: #f3776f;
+  --data-4: #feb272;
+  --data-5: #a8a9a5;
+  --data-6: #87d8f8;
+  --data-7: #bdf4eb;
+  --data-8: #8e00b0;
+  --data-9: #716fb3;
   --data-10: #95b000;
 
   /* TYPE SCALE — guide sizes are points, rendered here at 1.6x as pixels.
      Keep in step with SCALE in theme.py. */
-  --size-axis-value:  13px;  /*  8 */
-  --size-axis-title:  14px;  /*  9 */
-  --size-table-head:  14px;  /*  9 */
-  --size-body:        16px;  /* 10 */
-  --size-title:       19px;  /* 12 */
-  --size-page-title:  34px;
+  --size-axis-value: 13px;
+  /*  8 */
+  --size-axis-title: 14px;
+  /*  9 */
+  --size-table-head: 14px;
+  /*  9 */
+  --size-body: 16px;
+  /* 10 */
+  --size-title: 19px;
+  /* 12 */
+  --size-page-title: 34px;
 
   /* LAYOUT */
-  --gap: 16px;               /* "two spaces between visuals" */
+  --gap: 16px;
+  /* "two spaces between visuals" */
   --radius: 4px;
-  --max-width: 1800px;       /* content stops filling very wide monitors */
-  --narrow-width: 1100px;    /* pages of small tables, which look lost at full width */
+  --max-width: 1800px;
+  /* content stops filling very wide monitors */
+  --narrow-width: 1100px;
+  /* pages of small tables, which look lost at full width */
   --sidebar-width: 200px;
 }
 
@@ -57,6 +65,18 @@ body {
   font-weight: 400;
 }
 
+html,
+body,
+#react-entry-point {
+  min-height: 100%;
+}
+
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* --------------------------------------------------------------------------
    Page shell
    -------------------------------------------------------------------------- */
@@ -68,7 +88,11 @@ body {
 .shell {
   display: flex;
   align-items: stretch;
-  min-height: 100%;
+  flex: 1 1 auto;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-top: var(--mock-top-height, 0px);
+  padding-bottom: var(--mock-bottom-height, 0px);
 }
 
 .sidebar {
@@ -80,7 +104,8 @@ body {
 
 .content {
   flex: 1 1 auto;
-  min-width: 0; /* or wide grids push the sidebar off-screen instead of scrolling */
+  min-width: 0;
+  /* or wide grids push the sidebar off-screen instead of scrolling */
   max-width: var(--max-width);
   padding: 20px 28px 32px;
 }
@@ -98,6 +123,11 @@ body {
    breadcrumb carrying the page title. Stacking the logo row above the title
    mirrors that, so the stand-in sits where the real one does. */
 .mock-4insight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   padding: 8px 18px 0;
@@ -120,7 +150,8 @@ body {
 
 .mock-4insight-note {
   line-height: 22px;
-  color: #6b7075; /* quiet: it is a note to the developer, not part of the design */
+  color: #6b7075;
+  /* quiet: it is a note to the developer, not part of the design */
 }
 
 /* Stands in for the dashboard name 4insight's real header renders here,
@@ -134,7 +165,12 @@ body {
 }
 
 .mock-4insight-bottom-bar {
-  background: #e9edf1;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background: var(--dark-blue);
 }
 
 /* --------------------------------------------------------------------------
@@ -320,7 +356,8 @@ img {
   display: block;
 }
 
-input[type=submit], button {
+input[type=submit],
+button {
   background-color: var(--turquoise);
   color: #ffffff;
   border: none;
@@ -333,7 +370,8 @@ input[type=submit], button {
   font-size: var(--size-body);
 }
 
-input[type=submit]:hover, button:hover {
+input[type=submit]:hover,
+button:hover {
   background-color: var(--dark-blue);
 }
 

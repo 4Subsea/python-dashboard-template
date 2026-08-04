@@ -91,6 +91,8 @@ def mock_4insight():
 
 
 _mock_bar, _mock_bottom_bar = mock_4insight()
+_mock_top_height = MOCK_PLATFORM_CHROME if MOCK_PLATFORM_CHROME else 0
+_mock_bottom_height = MOCK_PLATFORM_GAP if MOCK_PLATFORM_CHROME else 0
 
 # App layout
 app.layout = html.Div(
@@ -105,7 +107,12 @@ app.layout = html.Div(
             className="shell",
         ),
     ]
-    + _mock_bottom_bar
+    + _mock_bottom_bar,
+    className="app-root",
+    style={
+        "--mock-top-height": f"{_mock_top_height}px",
+        "--mock-bottom-height": f"{_mock_bottom_height}px",
+    },
 )
 
 
