@@ -9,8 +9,8 @@ import os
 import pathlib
 
 import dash
-from dash import Dash, html, dcc, callback, Output, Input
 import dash_bootstrap_components as dbc
+from dash import Dash, Input, Output, callback, dcc, html
 from dotenv import load_dotenv
 
 import theme  # registers the "4subsea" Plotly template

@@ -8,9 +8,9 @@ default on import - nothing here sets a colour or a font.
 import pathlib
 
 import dash
-from dash import html, dcc, callback, Output, Input
 import pandas as pd
 import plotly.express as px
+from dash import Input, Output, callback, dcc, html
 
 dash.register_page(__name__, path="/analytics", name="Analytics", order=1)
 

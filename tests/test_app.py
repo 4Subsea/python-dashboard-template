@@ -1,9 +1,9 @@
 """Page registration, layouts and callbacks, without starting a browser."""
 
 import pytest
+from conftest import text_of
 
 import app
-from conftest import text_of
 
 EXPECTED_PAGES = {
     "/": "Home",

@@ -11,9 +11,9 @@ The table is implemented using the Dash AG Grid component, which allows for filt
 import pathlib
 
 import dash
-from dash import html, dcc
 import dash_ag_grid as dag
 import pandas as pd
+from dash import dcc, html
 
 dash.register_page(__name__, path="/", name="Home", order=0)
 
