@@ -1,0 +1,8 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        name: black (format)
+        stages: [pre-commit, pre-push, manual]
+        files: ^(src|tests)/.*\.py$

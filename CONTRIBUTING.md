@@ -51,9 +51,15 @@ config and the flag ever disagree you will reformat the whole repo.
 pip install -r requirements-dev.txt        # app + tests + formatter
 pip install -r requirements-notebooks.txt  # adds Jupyter for notebooks/
 
+# optional but recommended: auto-format staged files with black on commit
+pre-commit install --hook-type pre-commit
+# optional: run black check before push as well
+pre-commit install --hook-type pre-push
+
 cp .env.example .env                       # optional; defaults work as-is
 
 python src/app.py                          # the app, on :8050
 pytest                                     # the tests
 black .                                    # format
+pre-commit run --all-files                 # run configured hooks manually
 ```
