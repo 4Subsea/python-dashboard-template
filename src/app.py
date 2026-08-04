@@ -13,7 +13,7 @@ from dash import Dash, html, dcc, callback, Output, Input
 import dash_bootstrap_components as dbc
 from dotenv import load_dotenv
 
-import theme  # noqa: F401  (registers the "4subsea" Plotly template on import)
+import theme  # registers the "4subsea" Plotly template
 
 PAGE_TITLE = "Dashboard Template"
 
