@@ -13,7 +13,7 @@ and update this README and the browser-tab title in `src/app.py`.
 
 ```bash
 python -m venv .venv
-.venv\Scripts\activate                # Windows;  source .venv/bin/activate elsewhere
+.venv\Scripts\activate                
 pip install -r requirements-dev.txt   # app, tests and formatter
 
 python src/app.py

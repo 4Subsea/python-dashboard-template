@@ -3,9 +3,6 @@
 #
 # See requirements-dev.txt for tests and formatting, and
 # requirements-notebooks.txt for the notebooks.
-#
-# Minimum versions, verified working together.
-# To lock exact versions for a deploy: pip freeze > requirements.lock.txt
 
 dash>=3.0
 dash_bootstrap_components>=2.0
@@ -14,4 +11,4 @@ plotly>=6.0
 
 pandas>=2.2
 
-python-dotenv>=1.0     # reads .env in app.py; see .env.example
+python-dotenv>=1.0
