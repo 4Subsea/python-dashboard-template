@@ -35,7 +35,7 @@ edit it; `.env` is gitignored):
   configurable rather than hardcoded. Keep it `true` on your own laptop for
   hot reloading; set it `false` on anything anyone else can reach - the debug
   console executes Python on the host.
-- `MOCK_PLATFORM_CHROME` (and `MOCK_PLATFORM_GAP`) - see "Fitting the
+- `MOCK_PLATFORM_HEADER` (and `MOCK_PLATFORM_SPACER`) - see "Fitting the
   4insight frame" below. A personal, not-committed toggle rather than a
   machine-specific setting.
 
@@ -71,7 +71,7 @@ with nothing else to update.
 
 Real deployments serve this app inside an iframe on 4insight, under a header
 that takes 82 px, with 20 px of dead space below the frame. Set
-`MOCK_PLATFORM_CHROME=82` in `.env` and the app reserves the same space
+`MOCK_PLATFORM_HEADER=82` in `.env` and the app reserves the same space
 locally — the bar shows the 4insight logo and a "Placeholder title" standing
 in for where 4insight's own header names the dashboard, plus a small dev note
 so nobody mistakes the bar for real UI. 

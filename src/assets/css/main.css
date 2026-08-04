@@ -115,7 +115,7 @@ body,
   max-width: var(--narrow-width);
 }
 
-/* Development aid, shown only when MOCK_PLATFORM_CHROME is set. Stands in for
+/* Development aid, shown only when MOCK_PLATFORM_HEADER is set. Stands in for
    4insight's header so the space left for the app matches the real embedding.
    Heights come from app.py, not from here. */
 
@@ -170,7 +170,18 @@ body,
   right: 0;
   bottom: 0;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
   background: var(--dark-blue);
+}
+
+.mock-4insight-bottom-note {
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.55);
+  /* quiet: it is a note to the developer, not part of the design */
 }
 
 /* --------------------------------------------------------------------------

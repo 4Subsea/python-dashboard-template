@@ -20,8 +20,8 @@ load_dotenv(pathlib.Path(__file__).resolve().parents[1] / ".env", override=False
 
 # Load environemnt variables into globals
 DASH_DEBUG = os.getenv("DASH_DEBUG", "true").strip().lower() == "true"
-MOCK_PLATFORM_CHROME = int(os.getenv("MOCK_PLATFORM_CHROME", "0") or 0)
-MOCK_PLATFORM_GAP = int(os.getenv("MOCK_PLATFORM_GAP", "20") or 20)
+MOCK_PLATFORM_HEADER = int(os.getenv("MOCK_PLATFORM_HEADER", "0") or 0)
+MOCK_PLATFORM_SPACER = int(os.getenv("MOCK_PLATFORM_SPACER", "20") or 20)
 
 app = Dash(
     __name__,
@@ -54,13 +54,13 @@ def nav_bar(pathname):
 def mock_4insight():
     """A stand-in for 4insight's header, so local screens match the real thing.
 
-    Off unless MOCK_PLATFORM_CHROME is set - see .env.example. Returns the bar
+    Off unless MOCK_PLATFORM_HEADER is set - see .env.example. Returns the bar
     and the dead space below the iframe, both of which eat into the height a
     page has to work with. "Placeholder title" stands in for the dashboard
     name 4insight's real header renders there, below the logo row - matching
     the real header's 44px nav + 38px breadcrumb stack.
     """
-    if not MOCK_PLATFORM_CHROME:
+    if not MOCK_PLATFORM_HEADER:
         return [], []
     bar = html.Div(
         [
@@ -81,18 +81,22 @@ def mock_4insight():
             html.Span("Placeholder title", className="mock-4insight-title"),
         ],
         className="mock-4insight",
-        style={"height": f"{MOCK_PLATFORM_CHROME}px"},
+        style={"height": f"{MOCK_PLATFORM_HEADER}px"},
     )
     bottom_bar = html.Div(
+        html.Span(
+            "simulated spacer — not part of the app",
+            className="mock-4insight-bottom-note",
+        ),
         className="mock-4insight-bottom-bar",
-        style={"height": f"{MOCK_PLATFORM_GAP}px"},
+        style={"height": f"{MOCK_PLATFORM_SPACER}px"},
     )
     return [bar], [bottom_bar]
 
 
 _mock_bar, _mock_bottom_bar = mock_4insight()
-_mock_top_height = MOCK_PLATFORM_CHROME if MOCK_PLATFORM_CHROME else 0
-_mock_bottom_height = MOCK_PLATFORM_GAP if MOCK_PLATFORM_CHROME else 0
+_mock_top_height = MOCK_PLATFORM_HEADER if MOCK_PLATFORM_HEADER else 0
+_mock_bottom_height = MOCK_PLATFORM_SPACER if MOCK_PLATFORM_HEADER else 0
 
 # App layout
 app.layout = html.Div(
