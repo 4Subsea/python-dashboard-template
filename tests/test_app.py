@@ -111,6 +111,16 @@ def test_figures_are_json_serialisable():
     json.dumps(figure.to_plotly_json(), default=str)
 
 
+def test_figures_use_the_4subsea_theme():
+    """theme.py only registers its Plotly template as a side effect of being
+    imported - regression guard for that import silently going missing."""
+    import theme
+    from pages.analytics import update_chart
+
+    figure = update_chart("Alpha")
+    assert tuple(figure.layout.template.layout.colorway) == tuple(theme.COLORS)
+
+
 # ---------------------------------------------------------------------------
 # The 4insight mock header
 # ---------------------------------------------------------------------------

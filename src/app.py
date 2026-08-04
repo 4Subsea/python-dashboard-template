@@ -13,6 +13,8 @@ from dash import Dash, html, dcc, callback, Output, Input
 import dash_bootstrap_components as dbc
 from dotenv import load_dotenv
 
+import theme  # noqa: F401  (registers the "4subsea" Plotly template on import)
+
 PAGE_TITLE = "Dashboard Template"
 
 # Read environment variables from .env in the repo root, if present
