@@ -63,8 +63,12 @@ tests/                pytest suite
 ```
 
 Pages register themselves with `dash.register_page`, and the sidebar is built
-from `dash.page_registry` — adding a page means adding one file in `pages/`,
-with nothing else to update.
+from `dash.page_registry` — adding a page means adding one file in `pages/`.
+The one thing that doesn't update itself: `EXPECTED_PAGES`/`CALLBACK_IDS` at
+the top of `tests/test_app.py`, a small hand-written spec of what pages
+should exist and what their callbacks target. Add your page there too, or
+`pytest` will (correctly) tell you the registered pages don't match what the
+suite expects.
 
 
 ## Fitting the 4insight frame

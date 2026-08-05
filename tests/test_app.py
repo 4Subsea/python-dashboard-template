@@ -5,6 +5,10 @@ from conftest import text_of
 
 import app
 
+# The one spot that doesn't update itself when you add a page. Dash won't
+# catch a typo'd path, a forgotten dash.register_page call, or two pages
+# sharing an `order` - this dict is the spec these tests check reality
+# against, so add your new page's path/name here too.
 EXPECTED_PAGES = {
     "/": "Home",
     "/analytics": "Analytics",
@@ -55,6 +59,8 @@ def component_ids(node, found=None):
     return found
 
 
+# Same deal as EXPECTED_PAGES: add your new page's callback-bound component
+# ids here, or they simply aren't checked (not a failure, just a silent gap).
 CALLBACK_IDS = {
     "/": {"home-sample-grid"},
     "/analytics": {"analytics-category-filter", "analytics-chart"},

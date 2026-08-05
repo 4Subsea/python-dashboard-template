@@ -2,7 +2,8 @@
 
 This file is the top level, and contains the sidebar. Each page lives in
 pages/ and registers itself with dash.register_page, so adding a page means
-adding one file and nothing else.
+adding one file - plus updating EXPECTED_PAGES/CALLBACK_IDS in
+tests/test_app.py, which is the one thing that doesn't update itself.
 """
 
 import os
