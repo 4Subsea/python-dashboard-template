@@ -35,16 +35,12 @@ they reach CI at all. See `CONTRIBUTING.md` for the full set of hooks.
 There isn't much. Two variables come from `.env` (copy `.env.example` and
 edit it; `.env` is gitignored):
 
-- `DASH_DEBUG` - the one setting with a security consequence, so it stays
-  configurable rather than hardcoded. Keep it `true` on your own laptop for
-  hot reloading; set it `false` on anything anyone else can reach - the debug
-  console executes Python on the host.
+- `DASH_DEBUG` - the only setting with a security consequence. Keep it `true` 
+  on your own laptop for hot reloading; set it `false` on anything anyone else can reach.
 - `MOCK_PLATFORM_HEADER` (and `MOCK_PLATFORM_SPACER`) - see "Fitting the
-  4insight frame" below. A personal, not-committed toggle rather than a
-  machine-specific setting.
+  4insight frame" below. 
 
-Host and port aren't configurable - `app.run(debug=DASH_DEBUG)` uses Dash's
-own defaults (`127.0.0.1:8050`). 
+`app.run(debug=DASH_DEBUG)` uses Dash's own defaults (`127.0.0.1:8050`). 
 
 ## Layout
 
