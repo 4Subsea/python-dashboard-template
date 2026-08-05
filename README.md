@@ -20,11 +20,15 @@ python src/app.py
 ```
 
 Requirements are split by purpose: `requirements.txt` is what the dashboard
-needs to run, `requirements-dev.txt` adds pytest and black, and
+needs to run, `requirements-dev.txt` adds pytest, black and pre-commit, and
 `requirements-notebooks.txt` adds Jupyter for `notebooks/`.
 
 Then open <http://127.0.0.1:8050>. Debug mode is on, so saving a file reloads
 the app.
+
+Optional but recommended: `pre-commit install --hook-type pre-commit` runs
+black on staged files automatically, so formatting issues are caught before
+they reach CI at all. See `CONTRIBUTING.md` for the full set of hooks.
 
 ## Configuration
 
@@ -60,6 +64,7 @@ notebooks/            any notebooks used for exploration, sandboxing. Outside th
 tests/                pytest suite
 .github/              CI workflow + PR template
 .env.example          Example .env file; copy to .env to override
+.pre-commit-config.yaml   optional local git hooks; see CONTRIBUTING.md
 ```
 
 Pages register themselves with `dash.register_page`, and the sidebar is built
@@ -76,9 +81,17 @@ suite expects.
 Real deployments serve this app inside an iframe on 4insight, under a header
 that takes 82 px, with 20 px of dead space below the frame. Set
 `MOCK_PLATFORM_HEADER=82` in `.env` and the app reserves the same space
-locally — the bar shows the 4insight logo and a "Placeholder title" standing
-in for where 4insight's own header names the dashboard, plus a small dev note
-so nobody mistakes the bar for real UI. 
+locally — the top bar shows the 4insight logo and a "Placeholder title"
+standing in for where 4insight's own header names the dashboard, and the
+bottom bar stands in for the dead space below it. Both carry a small dev
+note so nobody mistakes them for real UI.
+
+Both bars are fixed-position overlays (`main.css`'s `.mock-4insight`/
+`.mock-4insight-bottom-bar`), not part of the normal page flow. `app.py` sets
+their heights as `--mock-top-height`/`--mock-bottom-height` CSS custom
+properties on the page root, and `.shell` pads itself by those same
+variables — that's what actually reserves the space so page content doesn't
+render underneath the bars.
 
 ## Styling / theming
 
@@ -111,8 +124,10 @@ pytest
 ```
 
 Covers page registration, that each page's layout builds, that every
-callback's component IDs actually exist in its page, and the mock header
-(absent by default, carries the logo and placeholder title when configured).
+callback's component IDs actually exist in its page, the mock header (absent
+by default, carries the logo, placeholder title and spacer note when
+configured), and that the analytics chart actually renders through the
+"4subsea" Plotly theme rather than silently falling back to Plotly's default.
 
 ## Contributing
 

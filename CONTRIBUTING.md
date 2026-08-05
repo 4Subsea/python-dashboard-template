@@ -2,12 +2,11 @@
 
 ## Definition of done
 
-Every change ticks all of these before it is merged, regardless of how small it
-looked when it started. Copy the list into the pull request and tick it there,
-so the reviewer can see what was actually checked rather than assuming.
+Every change ticks all of these before it is merged. The list lives in the pull request template (.github/pull_request_template.md) so that the PR request is pre-populated at creation. 
 
-- [ ] **`pytest` passes** — CI runs this
-- [ ] **`black` is clean** — CI runs this too
+
+- [ ] **`pytest` passes** (CI checks this)
+- [ ] **`black` is clean**  (CI checks this)
 - [ ] **Every threshold, unit and label comes from a named constant**, not a
       literal. If a number decides a colour or a pass/fail, it is defined once
       and read by the chart, the conditional formatting and the caption alike.
@@ -28,7 +27,9 @@ so the reviewer can see what was actually checked rather than assuming.
 layout, charts. Read it before your first change.
 
 The 4Subsea PBI style guide governs all colours, typography and figure
-conventions: <https://miro.com/app/board/uXjVHbD9HV0=/>
+conventions: <https://miro.com/app/board/uXjVHbD9HV0=/>. Note that the theme 
+was translated by claude on 2026-07-30 and an update will require manual 
+triggering. 
 
 If a change deliberately deviates from `CLAUDE.md`, document it: one place (the
 README is a good default), a comment at the line that deviates naming the
@@ -44,6 +45,10 @@ rule, and why.
 Options live in `pyproject.toml`, so the commands below behave identically for
 you, for your editor and for CI. Do not pass `--line-length` by hand; if the
 config and the flag ever disagree you will reformat the whole repo.
+
+`.pre-commit-config.yaml` runs black locally on the same files, so installing
+the hooks (see "Running things" below) catches most formatting issues before
+they ever reach CI.
 
 ## Running things
 
