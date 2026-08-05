@@ -35,7 +35,7 @@ they reach CI at all. See `CONTRIBUTING.md` for the full set of hooks.
 There isn't much. Two variables come from `.env` (copy `.env.example` and
 edit it; `.env` is gitignored):
 
-- `DASH_DEBUG` - the only setting with a security consequence. Keep it `true` 
+- `DASH_DEBUG` - the only setting with a security consequence: its debug console can run arbitrary Python for anyone who reaches it. Keep it `true` 
   on your own laptop for hot reloading; set it `false` on anything anyone else can reach.
 - `MOCK_PLATFORM_HEADER` (and `MOCK_PLATFORM_SPACER`) - see "Fitting the
   4insight frame" below. 
