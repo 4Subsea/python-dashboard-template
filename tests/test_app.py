@@ -150,3 +150,24 @@ def test_the_mock_header_carries_the_logo_and_placeholder_title_when_configured(
     assert bar.style["height"] == "82px"
     assert bottom_bar.style["height"] == "20px"
     assert text_of(bottom_bar.children) == "simulated spacer — not part of the app"
+
+
+# ---------------------------------------------------------------------------
+# Memory logging
+# ---------------------------------------------------------------------------
+
+
+def test_navigation_logs_memory_when_enabled(monkeypatch):
+    monkeypatch.setattr(app, "LOG_MEMORY", True)
+    calls = []
+    monkeypatch.setattr(app.memory_log, "log_once", lambda note="": calls.append(note))
+    app.highlight_active_tab("/analytics")
+    assert calls == ["/analytics"]
+
+
+def test_navigation_does_not_log_memory_when_disabled(monkeypatch):
+    monkeypatch.setattr(app, "LOG_MEMORY", False)
+    calls = []
+    monkeypatch.setattr(app.memory_log, "log_once", lambda note="": calls.append(note))
+    app.highlight_active_tab("/analytics")
+    assert calls == []
