@@ -24,6 +24,7 @@ load_dotenv(pathlib.Path(__file__).resolve().parents[1] / ".env", override=False
 
 # Load environemnt variables into globals
 DASH_DEBUG = os.getenv("DASH_DEBUG", "true").strip().lower() == "true"
+PORT = int((os.getenv("PORT", "5050") or "5050").strip())
 MOCK_PLATFORM_HEADER = int(os.getenv("MOCK_PLATFORM_HEADER", "0") or 0)
 MOCK_PLATFORM_SPACER = int(os.getenv("MOCK_PLATFORM_SPACER", "20") or 20)
 LOG_MEMORY = os.getenv("LOG_MEMORY", "false").strip().lower() == "true"
@@ -134,5 +135,5 @@ def highlight_active_tab(pathname):
 
 
 if __name__ == "__main__":
-    # Run the app. Set DASH_DEBUG in .env to toggle debug mode.
-    app.run(debug=DASH_DEBUG)
+    # Run the app. Set DASH_DEBUG and PORT in .env to configure.
+    app.run(debug=DASH_DEBUG, port=PORT)
