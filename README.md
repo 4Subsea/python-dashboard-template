@@ -89,6 +89,12 @@ properties on the page root, and `.shell` pads itself by those same
 variables — that's what actually reserves the space so page content doesn't
 render underneath the bars.
 
+## Memory logging
+
+Set `LOG_MEMORY=true` in `.env` to print the app's RSS memory usage to the
+terminal every time you click a page link. It's a dev aid only, off by
+default.
+
 ## Styling / theming
 
 Colours, fonts and spacing live in two places that must be kept in step:

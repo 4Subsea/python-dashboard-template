@@ -14,6 +14,7 @@ import dash_bootstrap_components as dbc
 from dash import Dash, Input, Output, callback, dcc, html
 from dotenv import load_dotenv
 
+import memory_log
 import theme  # registers the "4subsea" Plotly template
 
 PAGE_TITLE = "Dashboard Template"
@@ -25,6 +26,7 @@ load_dotenv(pathlib.Path(__file__).resolve().parents[1] / ".env", override=False
 DASH_DEBUG = os.getenv("DASH_DEBUG", "true").strip().lower() == "true"
 MOCK_PLATFORM_HEADER = int(os.getenv("MOCK_PLATFORM_HEADER", "0") or 0)
 MOCK_PLATFORM_SPACER = int(os.getenv("MOCK_PLATFORM_SPACER", "20") or 20)
+LOG_MEMORY = os.getenv("LOG_MEMORY", "false").strip().lower() == "true"
 
 app = Dash(
     __name__,
@@ -126,9 +128,11 @@ app.layout = html.Div(
 @callback(Output("nav-bar", "children"), Input("url", "pathname"))
 def highlight_active_tab(pathname):
     """Function to highlight the active tab in the sidebar based on the current URL path."""
+    if LOG_MEMORY:
+        memory_log.log_once(pathname)
     return nav_bar(pathname)
 
 
 if __name__ == "__main__":
     # Run the app. Set DASH_DEBUG in .env to toggle debug mode.
-    app.run(debug=DASH_DEBUG)
+    app.run(debug=DASH_DEBUG, port=1234)
