@@ -3,6 +3,7 @@ python-dashboard-template/
 ├── src/
 │   ├── app.py             # Main application file
 │   ├── theme.py            # Colours, type scale and the Plotly template
+│   ├── memory_log.py       # Dev aid: prints RSS memory usage, see LOG_MEMORY
 │   ├── assets/            # Static files (CSS, images, sample data)
 │   └── pages/             # One module per page, each with dash.register_page
 │       ├── home.py

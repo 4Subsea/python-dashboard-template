@@ -63,7 +63,7 @@ pre-commit install --hook-type pre-push
 
 cp .env.example .env                       # optional; defaults work as-is
 
-python src/app.py                          # the app, on :8050
+python src/app.py                          # the app, on :5050
 pytest                                     # the tests
 black .                                    # format
 pre-commit run --all-files                 # run configured hooks manually

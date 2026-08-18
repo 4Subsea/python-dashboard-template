@@ -23,7 +23,7 @@ Requirements are split by purpose: `requirements.txt` is what the dashboard
 needs to run, `requirements-dev.txt` adds pytest, black and pre-commit, and
 `requirements-notebooks.txt` adds Jupyter for `notebooks/`.
 
-Then open <http://127.0.0.1:8050>. Debug mode is on, so saving a file reloads
+Then open <http://127.0.0.1:5050>. Debug mode is on, so saving a file reloads
 the app.
 
 Optional but recommended: `pre-commit install --hook-type pre-commit` runs
@@ -32,15 +32,15 @@ they reach CI at all. See `CONTRIBUTING.md` for the full set of hooks.
 
 ## Configuration
 
-There isn't much. Two variables come from `.env` (copy `.env.example` and
+Five variables come from `.env` (copy `.env.example` and
 edit it; `.env` is gitignored):
 
-- `DASH_DEBUG` - the only setting with a security consequence: its debug console can run arbitrary Python for anyone who reaches it. Keep it `true` 
-  on your own laptop for hot reloading; set it `false` on anything anyone else can reach.
+- `DASH_DEBUG` - the only setting with a security consequence: its debug console can run arbitrary Python for anyone who reaches it. Keep it `true` on your own laptop for hot reloading; set it `false` on anything anyone else can reach.
+- `PORT` - which port to listen to. Defaults to 4insight's port (5050).
 - `MOCK_PLATFORM_HEADER` (and `MOCK_PLATFORM_SPACER`) - see "Fitting the
   4insight frame" below. 
+- `LOG_MEMORY` - toggles the memory logger, which prints the app's RSS memory to terminal every time the user navigates between pages. Defaults to false.
 
-`app.run(debug=DASH_DEBUG)` uses Dash's own defaults (`127.0.0.1:8050`). 
 
 ## Layout
 
@@ -48,6 +48,7 @@ edit it; `.env` is gitignored):
 src/
 ├── app.py            Dash shell: side navigation, mock 4insight header
 ├── theme.py          colours, type scale and the Plotly template
+├── memory_log.py     dev aid: prints RSS memory usage, see LOG_MEMORY
 ├── pages/
 │   ├── home.py       example: an AgGrid over the sample data
 │   └── analytics.py  example: a slicer driving a filtered Plotly chart

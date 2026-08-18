@@ -8,8 +8,7 @@
 
 ## Definition of done
 
-CI covers the first two. The rest are yours — tick them because you did them,
-not because they were already ticked. See `CONTRIBUTING.md` for why each is here.
+CI covers the first two. See `CONTRIBUTING.md` for why each is here.
 
 - [ ] `pytest` passes
 - [ ] `black` is clean
