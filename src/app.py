@@ -135,4 +135,4 @@ def highlight_active_tab(pathname):
 
 if __name__ == "__main__":
     # Run the app. Set DASH_DEBUG in .env to toggle debug mode.
-    app.run(debug=DASH_DEBUG, port=1234)
+    app.run(debug=DASH_DEBUG)
