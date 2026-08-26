@@ -36,10 +36,13 @@ def layout():
         # flex: the first 5 columns are 20% narrower than an even split, and
         # Comment absorbs that freed width (0.8 * 5 = 4, so Comment's flex of
         # 2 keeps the same total of 6 that six equal columns would have had).
-        columnDefs=[
-            {"field": col, "headerName": col, "flex": 0.8} for col in list(REVISION_LOG[0])[:5]
-        ]
-        + [{"field": "Comment", "headerName": "Comment", "flex": 2}],
+        columnDefs=(
+            [
+                {"field": col, "headerName": col, "flex": 0.8}
+                for col in list(REVISION_LOG[0])[:5]
+            ]
+            + [{"field": "Comment", "headerName": "Comment", "flex": 2}]
+        ),
         defaultColDef={"filter": True, "sortable": True},
         # No columnSize: AG Grid's sizeColumnsToFit (what "responsiveSizeToFit"
         # calls) recalculates widths on its own and overrides colDef.flex in
