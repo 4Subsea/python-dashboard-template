@@ -3,7 +3,6 @@ python-dashboard-template/
 ├── src/
 │   ├── app.py             # Main application file
 │   ├── theme.py            # Colours, type scale and the Plotly template
-│   ├── memory_log.py       # Dev aid: prints RSS memory usage, see LOG_MEMORY
 │   ├── assets/            # Static files (CSS, images, sample data)
 │   └── pages/             # One module per page, each with dash.register_page
 │       ├── home.py
@@ -53,6 +52,43 @@ python-dashboard-template/
   - `dashGridOptions={"theme": "themeBalham", "animateRows": True, "pagination": True, "paginationPageSize": 10}`
   - `columnSize="responsiveSizeToFit"`
   - `defaultColDef={"filter": True, "sortable": True}`
+
+## Fullscreen Toggle Pattern
+A reusable "expand to fullscreen" button for any chart inside a `.visual` box. No Dash callback is needed — it's pure CSS + one small JS file in `assets/`, so it automatically applies to any current or future chart that follows the markup pattern below.
+
+**Why it's built this way (read this before changing it):** the naive version — toggle a `position: fixed` class and call `Plotly.Plots.resize(gd)` — breaks in two ways that are easy to reintroduce by accident:
+1. Outside fullscreen, a plot's container normally has no explicit height (it's sized *by* the plot, not the other way round). Asking Plotly to "resize to fit its container" on exit is therefore circular — the container has no size to resize to, and the chart doesn't shrink back.
+2. `dcc.Loading` wraps the graph in one or two extra `<div>`s whose class names aren't part of the public Dash API. Trying to cascade a height down through them with CSS percentages (`height: 100%` chained through unknown wrapper divs) silently breaks and leaves the chart stuck at a stale pixel size — which, in a flex row with the default `align-items: stretch`, then drags the *other* column's box height along with it.
+
+The fix: give the chart's own wrapper (`.graph-wrap`, not the Plotly div itself) an explicit, always-defined height in both states (fixed px normally, flex-filled in fullscreen), then measure that wrapper directly in JS and set the chart's exact pixel size via `Plotly.relayout(gd, {width, height, autosize: false})`. This never depends on the unknown internal `dcc.Loading` DOM structure.
+
+**Markup** — wrap every chart to make fullscreen-able like this:
+```python
+html.Div(
+    [
+        html.Button(
+            "⛶",
+            className="fullscreen-toggle-btn",
+            title="Toggle full screen",
+            **{"aria-label": "Toggle full screen"},
+        ),
+        html.Div("Chart Title", className="visual-title"),
+        html.Div(
+            dcc.Loading(dcc.Graph(id="my-chart")),
+            className="graph-wrap",
+        ),
+    ],
+    className="visual",
+)
+```
+If several charts sit side by side in a flex row, add `"alignItems": "flex-start"` to that row's `style` dict — a safety net so one chart's sizing hiccup can never stretch its neighbor.
+
+The CSS lives in `assets/css/main.css` (the `.visual`, `.fullscreen-toggle-btn`, `.visual--fullscreen`, `.graph-wrap` and `body.fullscreen-active` rules) and the JS lives in `assets/fullscreen.js`. Both are already in the template and apply automatically — no per-page wiring needed beyond the markup above.
+
+**Rules when reusing this:**
+- Always wrap the chart in `.graph-wrap` — never put `fullscreen-toggle-btn` next to a bare `dcc.Graph`/`dcc.Loading` without it; the JS measures `.graph-wrap`, not the Plotly div, so skipping it breaks the resize.
+- Don't try to make the chart's height cascade through CSS percentages past `.graph-wrap` — that's the exact thing that broke before. Let the JS set the Plotly size explicitly.
+- Only one visual can be fullscreen at a time by design (`enterFullscreen` clears any other `.visual--fullscreen` first); don't remove that if adding more charts.
 
 ## Avoid Hallucinations
 - Never use `app.run_server`; only use `app.run`

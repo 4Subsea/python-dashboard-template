@@ -257,6 +257,10 @@ body,
    -------------------------------------------------------------------------- */
 
 .visual {
+  position: relative;
+  /* so .fullscreen-toggle-btn can be pinned to a corner */
+  overflow: hidden;
+  /* clips chart overflow during resize, see fullscreen.js */
   border: 1px solid var(--border-grey-1);
   border-radius: var(--radius);
   padding: 12px;
@@ -391,4 +395,71 @@ input[disabled] {
   border: 1px solid var(--border-grey-2);
   background-color: var(--border-grey-1);
   color: var(--grey);
+}
+
+/* --------------------------------------------------------------------------
+   Fullscreen toggle for chart visuals — see assets/fullscreen.js and the
+   "Fullscreen Toggle Pattern" section in CLAUDE.md for the markup and the
+   reasoning behind this approach.
+   -------------------------------------------------------------------------- */
+
+.fullscreen-toggle-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.visual--fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  margin: 0;
+  border-radius: 0;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.visual--fullscreen .fullscreen-toggle-btn {
+  top: 16px;
+  right: 16px;
+}
+
+.visual--fullscreen .visual-title {
+  flex: 0 0 auto;
+}
+
+/* .graph-wrap's own box size is always deterministic - a fixed height
+   normally, or flex-filled the remaining fullscreen space. We do NOT rely
+   on that cascading further down into dcc.Loading's wrapper divs; the JS
+   in fullscreen.js measures this box directly instead. */
+.graph-wrap {
+  height: 460px;
+  overflow: hidden;
+}
+
+.visual--fullscreen .graph-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+}
+
+body.fullscreen-active {
+  overflow: hidden;
 }
