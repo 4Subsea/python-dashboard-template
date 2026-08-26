@@ -6,6 +6,7 @@ python-dashboard-template/
 │   ├── assets/            # Static files (CSS, images, sample data)
 │   └── pages/             # One module per page, each with dash.register_page
 │       ├── home.py
+│       ├── data_table.py
 │       └── analytics.py
 ├── tests/                 # pytest suite
 ├── notebooks/             # ad-hoc exploration, outside the running app

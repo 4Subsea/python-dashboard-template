@@ -12,7 +12,7 @@ import pandas as pd
 import plotly.express as px
 from dash import Input, Output, callback, dcc, html
 
-dash.register_page(__name__, path="/analytics", name="Analytics", order=1)
+dash.register_page(__name__, path="/analytics", name="Analytics", order=2)
 
 SAMPLE_DATA_PATH = pathlib.Path(__file__).resolve().parents[1] / "assets" / "sample_data.csv"
 

@@ -1,12 +1,13 @@
 # Python Dashboard Template
 
-A starting point for Plotly Dash dashboards: one theme, one working example
-page and one filterable-chart page, a mock-up of 4insight's header for local
-layout work, and the process scaffolding (CI, PR template, `CLAUDE.md`
+A starting point for Plotly Dash dashboards: one theme, a home page with a
+revision log and notes box, a data-table example page and a
+filterable-chart page, a mock-up of 4insight's header for local layout
+work, and the process scaffolding (CI, PR template, `CLAUDE.md`
 conventions) set up.
 
 To start a new project from this template: clone or copy it, replace
-`src/assets/sample_data.csv` and the two pages in `src/pages/` with your own,
+`src/assets/sample_data.csv` and the pages in `src/pages/` with your own,
 and update this README and the browser-tab title in `src/app.py`.
 
 ## Running it
@@ -50,7 +51,8 @@ src/
 ├── theme.py          colours, type scale and the Plotly template
 ├── memory_log.py     dev aid: prints RSS memory usage, see LOG_MEMORY
 ├── pages/
-│   ├── home.py       example: an AgGrid over the sample data
+│   ├── home.py       landing page: revision log AgGrid and a free-text notes box
+│   ├── data_table.py example: an AgGrid over the sample data
 │   └── analytics.py  example: a slicer driving a filtered Plotly chart
 └── assets/
     ├── css/main.css  page styling, mirrors theme.py as CSS variables

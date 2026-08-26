@@ -291,6 +291,19 @@ body,
   margin-bottom: var(--gap);
 }
 
+.notes-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-grey-2);
+  border-radius: var(--radius);
+  font-family: var(--font-main);
+  font-size: var(--size-body);
+  color: var(--body-text);
+  box-sizing: border-box;
+  resize: vertical;
+}
+
 /* --------------------------------------------------------------------------
    Tables (AG Grid)
    top border 2px dark grey · inner 1px grey · headers size 9 dark grey
