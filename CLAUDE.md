@@ -53,7 +53,7 @@ python-dashboard-template/
 - **AgGrid Configs**: When instantiating `dag.AgGrid`, always set the following properties:
   - `columnSize="responsiveSizeToFit"`
   - `defaultColDef={"filter": True, "sortable": True}`
-  - `dashGridOptions={"theme": "themeBalham", "animateRows": True, **pagination_options(row_count)}`, where `pagination_options` switches on row count rather than pagination being on for every table:
+  - `dashGridOptions={"theme": "themeBalham", "animateRows": True, ...}`, choosing pagination settings based on row count:
     - 15 rows or fewer: `{"pagination": False, "domLayout": "autoHeight"}` — the grid sizes to its content instead of drawing a tall empty box with a pager underneath a handful of rows.
     - more than 15 rows: `{"pagination": True, "paginationPageSize": 10}`
 
