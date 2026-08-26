@@ -19,8 +19,8 @@ SAMPLE_DATA_PATH = pathlib.Path(__file__).resolve().parents[1] / "assets" / "sam
 
 def load_sample_data():
     """Not shared with app.py: importing from app here would re-trigger Dash's
-    own page auto-discovery when the app is run as a script. See home.py for
-    the same function - duplicated rather than imported, on purpose."""
+    own page auto-discovery when the app is run as a script. See data_table.py
+    for the same function - duplicated rather than imported, on purpose."""
     return pd.read_csv(SAMPLE_DATA_PATH)
 
 

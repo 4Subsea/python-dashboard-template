@@ -6,7 +6,7 @@ python-dashboard-template/
 │   ├── memory_log.py       # Opt-in dev aid: prints RSS memory to the terminal, see LOG_MEMORY
 │   ├── assets/            # Static files (CSS, images, sample data)
 │   └── pages/             # One module per page, each with dash.register_page
-│       ├── home.py
+│       ├── introduction.py
 │       ├── data_table.py
 │       └── analytics.py
 ├── tests/                 # pytest suite

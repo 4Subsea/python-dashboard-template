@@ -1,4 +1,4 @@
-"""Home page: revision log and a free-text notes box.
+"""Introduction page: revision log and a free-text notes box.
 
 Landing page. The revision log records who issued, checked and approved
 each version of the app's content - add a row to issue a new revision
@@ -29,7 +29,7 @@ REVISION_LOG = [
 
 def layout():
     grid = dag.AgGrid(
-        id="home-revision-log-grid",
+        id="introduction-revision-log-grid",
         rowData=REVISION_LOG,
         # headerName explicitly, or AG Grid title-cases the field: "Comment"
         # would still be fine, but "Revision No." would render as "Revision No .".
@@ -37,10 +37,7 @@ def layout():
         # Comment absorbs that freed width (0.8 * 5 = 4, so Comment's flex of
         # 2 keeps the same total of 6 that six equal columns would have had).
         columnDefs=(
-            [
-                {"field": col, "headerName": col, "flex": 0.8}
-                for col in list(REVISION_LOG[0])[:5]
-            ]
+            [{"field": col, "headerName": col, "flex": 0.8} for col in list(REVISION_LOG[0])[:5]]
             + [{"field": "Comment", "headerName": "Comment", "flex": 2}]
         ),
         defaultColDef={"filter": True, "sortable": True},
@@ -68,7 +65,7 @@ def layout():
                 [
                     html.Div("Project info", className="visual-title"),
                     dcc.Textarea(
-                        id="home-notes-textarea",
+                        id="introduction-notes-textarea",
                         value="Here you can write free text about the project, the dashboard or other relevant information.",
                         className="notes-textarea",
                     ),
