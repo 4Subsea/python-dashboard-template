@@ -10,7 +10,7 @@ import app
 # sharing an `order` - this dict is the spec these tests check reality
 # against, so add your new page's path/name here too.
 EXPECTED_PAGES = {
-    "/": "Home",
+    "/": "Introduction",
     "/data-table": "Data table",
     "/analytics": "Analytics",
 }

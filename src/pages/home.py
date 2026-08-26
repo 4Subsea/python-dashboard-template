@@ -10,7 +10,7 @@ import dash
 import dash_ag_grid as dag
 from dash import dcc, html
 
-dash.register_page(__name__, path="/", name="Home", order=0)
+dash.register_page(__name__, path="/", name="Introduction", order=0)
 
 # Empty Checked, Approved, etc. mean exactly that: not yet checked, not yet
 # approved. Fill them in when you fill in a real revision.
@@ -22,7 +22,7 @@ REVISION_LOG = [
         "Author": "ABC",
         "Checked": "DEF",
         "Approved": "GHI",
-        "Reason for issue": "Issued for client review",
+        "Comment": " ",
     },
 ]
 
@@ -31,11 +31,20 @@ def layout():
     grid = dag.AgGrid(
         id="home-revision-log-grid",
         rowData=REVISION_LOG,
-        # headerName explicitly, or AG Grid title-cases the field: "Reason for
-        # issue" would render as "Reason For Issue".
-        columnDefs=[{"field": col, "headerName": col} for col in REVISION_LOG[0]],
+        # headerName explicitly, or AG Grid title-cases the field: "Comment"
+        # would still be fine, but "Revision No." would render as "Revision No .".
+        # flex: the first 5 columns are 20% narrower than an even split, and
+        # Comment absorbs that freed width (0.8 * 5 = 4, so Comment's flex of
+        # 2 keeps the same total of 6 that six equal columns would have had).
+        columnDefs=[
+            {"field": col, "headerName": col, "flex": 0.8} for col in list(REVISION_LOG[0])[:5]
+        ]
+        + [{"field": "Comment", "headerName": "Comment", "flex": 2}],
         defaultColDef={"filter": True, "sortable": True},
-        columnSize="responsiveSizeToFit",
+        # No columnSize: AG Grid's sizeColumnsToFit (what "responsiveSizeToFit"
+        # calls) recalculates widths on its own and overrides colDef.flex in
+        # the process - the two are alternative sizing mechanisms, not
+        # composable. Flex-sized columns already resize responsively without it.
         dashGridOptions={
             "theme": "themeBalham",
             "animateRows": True,
@@ -52,22 +61,24 @@ def layout():
     )
     return html.Div(
         [
-            
             html.Div(
-                dcc.Textarea(
-                    id="home-notes-textarea",
-                    value="Here you can write free-text notes about the app's content, or anything else you want to remember.",
-                    className="notes-textarea",
-                ),
+                [
+                    html.Div("Project info", className="visual-title"),
+                    dcc.Textarea(
+                        id="home-notes-textarea",
+                        value="Here you can write free text about the project, the dashboard or other relevant information.",
+                        className="notes-textarea",
+                    ),
+                ],
                 className="visual",
             ),
             html.Div(
-                            [
-                                html.Div("Revision log", className="visual-title"),
-                                dcc.Loading(grid),
-                            ],
-                            className="visual row-gap",
-                        )
+                [
+                    html.Div("Revision log", className="visual-title"),
+                    dcc.Loading(grid),
+                ],
+                className="visual row-gap",
+            ),
         ],
         # A small table and a text box read as mostly whitespace spread
         # across the full 1800px content width.

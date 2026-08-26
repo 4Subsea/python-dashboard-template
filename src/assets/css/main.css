@@ -294,9 +294,8 @@ body,
 .notes-textarea {
   width: 100%;
   min-height: 120px;
-  padding: 8px 12px;
-  border: 1px solid var(--border-grey-2);
-  border-radius: var(--radius);
+  padding: 0;
+  border: none;
   font-family: var(--font-main);
   font-size: var(--size-body);
   color: var(--body-text);
