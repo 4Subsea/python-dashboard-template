@@ -3,6 +3,7 @@ python-dashboard-template/
 ├── src/
 │   ├── app.py             # Main application file
 │   ├── theme.py            # Colours, type scale and the Plotly template
+│   ├── memory_log.py       # Opt-in dev aid: prints RSS memory to the terminal, see LOG_MEMORY
 │   ├── assets/            # Static files (CSS, images, sample data)
 │   └── pages/             # One module per page, each with dash.register_page
 │       ├── home.py
@@ -50,9 +51,11 @@ python-dashboard-template/
 - **Component Libraries**: Prioritize component libraries in this order: Dash Core Components combined with Dash HTML Components, then Dash Mantine Components, then Dash Bootstrap Components if required. Try to minimize the number of libraries required. 
 - **Data Tables**: Do not use `dash.datatable`; use `dash.AgGrid` instead.
 - **AgGrid Configs**: When instantiating `dag.AgGrid`, always set the following properties:
-  - `dashGridOptions={"theme": "themeBalham", "animateRows": True, "pagination": True, "paginationPageSize": 10}`
   - `columnSize="responsiveSizeToFit"`
   - `defaultColDef={"filter": True, "sortable": True}`
+  - `dashGridOptions={"theme": "themeBalham", "animateRows": True, **pagination_options(row_count)}`, where `pagination_options` switches on row count rather than pagination being on for every table:
+    - 15 rows or fewer: `{"pagination": False, "domLayout": "autoHeight"}` — the grid sizes to its content instead of drawing a tall empty box with a pager underneath a handful of rows.
+    - more than 15 rows: `{"pagination": True, "paginationPageSize": 10}`
 
 ## Fullscreen Toggle Pattern
 A reusable "expand to fullscreen" button for any chart inside a `.visual` box. No Dash callback is needed — it's pure CSS + one small JS file in `assets/`, so it automatically applies to any current or future chart that follows the markup pattern below.

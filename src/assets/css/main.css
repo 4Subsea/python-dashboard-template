@@ -258,9 +258,11 @@ body,
 
 .visual {
   position: relative;
-  /* so .fullscreen-toggle-btn can be pinned to a corner */
-  overflow: hidden;
-  /* clips chart overflow during resize, see fullscreen.js */
+  /* so .fullscreen-toggle-btn can be pinned to a corner. No overflow: hidden
+     here - .graph-wrap already clips chart overflow during resize (see
+     fullscreen.js), and hiding overflow on every .visual would also clip
+     unrelated content that legitimately grows past the box, such as a
+     resizable .notes-textarea. */
   border: 1px solid var(--border-grey-1);
   border-radius: var(--radius);
   padding: 12px;
