@@ -1,10 +1,10 @@
 """
-Landing page
-------------
+Data table page
+----------------
 
-This is the "Home" page, which is the first page users see when they open the app.
-It contains a table of sample data fetched from the "assets/sample_data.csv" file.
-The table is implemented using the Dash AG Grid component, which allows for filtering, sorting, and pagination.
+Example page showing a table of sample data fetched from the
+"assets/sample_data.csv" file. The table is implemented using the Dash AG
+Grid component, which allows for filtering, sorting, and pagination.
 
 """
 
@@ -15,7 +15,7 @@ import dash_ag_grid as dag
 import pandas as pd
 from dash import dcc, html
 
-dash.register_page(__name__, path="/", name="Home", order=0)
+dash.register_page(__name__, path="/data-table", name="Data table", order=1)
 
 SAMPLE_DATA_PATH = pathlib.Path(__file__).resolve().parents[1] / "assets" / "sample_data.csv"
 
@@ -30,7 +30,7 @@ def load_sample_data():
 def layout():
     df = load_sample_data()
     grid = dag.AgGrid(
-        id="home-sample-grid",
+        id="data-table-sample-grid",
         rowData=df.to_dict("records"),
         columnDefs=[{"field": col, "headerName": col} for col in df.columns],
         defaultColDef={"filter": True, "sortable": True},

@@ -10,7 +10,8 @@ import app
 # sharing an `order` - this dict is the spec these tests check reality
 # against, so add your new page's path/name here too.
 EXPECTED_PAGES = {
-    "/": "Home",
+    "/": "Introduction",
+    "/data-table": "Data table",
     "/analytics": "Analytics",
 }
 
@@ -62,7 +63,8 @@ def component_ids(node, found=None):
 # Same deal as EXPECTED_PAGES: add your new page's callback-bound component
 # ids here, or they simply aren't checked (not a failure, just a silent gap).
 CALLBACK_IDS = {
-    "/": {"home-sample-grid"},
+    "/": {"introduction-revision-log-grid"},
+    "/data-table": {"data-table-sample-grid"},
     "/analytics": {"analytics-category-filter", "analytics-chart"},
 }
 

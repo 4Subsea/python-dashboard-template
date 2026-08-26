@@ -12,15 +12,15 @@ import pandas as pd
 import plotly.express as px
 from dash import Input, Output, callback, dcc, html
 
-dash.register_page(__name__, path="/analytics", name="Analytics", order=1)
+dash.register_page(__name__, path="/analytics", name="Analytics", order=2)
 
 SAMPLE_DATA_PATH = pathlib.Path(__file__).resolve().parents[1] / "assets" / "sample_data.csv"
 
 
 def load_sample_data():
     """Not shared with app.py: importing from app here would re-trigger Dash's
-    own page auto-discovery when the app is run as a script. See home.py for
-    the same function - duplicated rather than imported, on purpose."""
+    own page auto-discovery when the app is run as a script. See data_table.py
+    for the same function - duplicated rather than imported, on purpose."""
     return pd.read_csv(SAMPLE_DATA_PATH)
 
 
