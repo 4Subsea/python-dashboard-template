@@ -3,50 +3,37 @@
    https://miro.com/app/board/uXjVHbD9HV0=/
    ========================================================================== */
 
+/* Colours, fonts and the base type/spacing tokens all come from the
+   4subsea-design-system package's colors_and_type.css (loaded as an external
+   stylesheet - see app.py). The names below are kept as a stable, app-local
+   vocabulary for this file - each just points at the design system's token,
+   so there is one place any of these values is actually written. Sizes
+   follow theme_4insight.py's two-size-by-role split (FS_SMALL / FS_TITLE)
+   rather than the old five-step ladder, so this file's chrome text matches
+   the Plotly figures'. */
 :root {
-  /* FONT */
-  --font-main: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
+  --font-main: var(--font-sans);
 
-  /* COLORS, UI */
-  --border-grey-1: #e6e6e6;
-  --border-grey-2: #d2d3ce;
-  --light-grey: #f8f9fa;
-  --grey: #a8a9a5;
-  --dark-grey: #7e7f7c;
-  --dark-blue: #012b5d;
-  --turquoise: #00a0b0;
-  --body-text: #002023;
+  --border-grey-1: var(--surface-border);
+  --border-grey-2: var(--gray-500);
+  --light-grey: var(--surface-muted);
+  --grey: var(--gray-600);
+  --dark-grey: var(--gray-700);
+  --dark-blue: var(--secondary-500);
+  --turquoise: var(--primary-500);
+  --body-text: var(--text-body);
 
-  /* COLORS, data (use them in this order) */
-  --data-1: #012b5d;
-  --data-2: #00a0b0;
-  --data-3: #f3776f;
-  --data-4: #feb272;
-  --data-5: #a8a9a5;
-  --data-6: #87d8f8;
-  --data-7: #bdf4eb;
-  --data-8: #8e00b0;
-  --data-9: #716fb3;
-  --data-10: #95b000;
-
-  /* TYPE SCALE — guide sizes are points, rendered here at 1.6x as pixels.
-     Keep in step with SCALE in theme.py. */
-  --size-axis-value: 13px;
-  /*  8 */
-  --size-axis-title: 14px;
-  /*  9 */
-  --size-table-head: 14px;
-  /*  9 */
-  --size-body: 16px;
-  /* 10 */
-  --size-title: 19px;
-  /* 12 */
-  --size-page-title: 34px;
+  /* TYPE SCALE */
+  --size-axis-title: var(--fs-small);
+  /* also table headers */
+  --size-table-head: var(--fs-small);
+  --size-body: var(--fs-body);
+  --size-title: var(--fs-h6);
+  /* visual titles, slicer headers, sidebar links */
 
   /* LAYOUT */
-  --gap: 16px;
+  --gap: var(--space-4);
   /* "two spaces between visuals" */
-  --radius: 4px;
   --max-width: 1800px;
   /* content stops filling very wide monitors */
   --narrow-width: 1100px;
@@ -188,8 +175,8 @@ body,
    Headings
    -------------------------------------------------------------------------- */
 
-/* The page title lives in 4insight's header, not in the app. --size-page-title
-   is kept for anything that needs a large heading later. */
+/* The page title lives in 4insight's header, not in the app - nothing here
+   needs a page-title-sized heading. */
 
 /* Footnote under a visual: small, dark grey, sits inside the visual border */
 .footnote {
@@ -219,14 +206,17 @@ body,
   padding: 9px 18px 9px 15px;
   font-size: var(--size-title);
   line-height: 1.25;
-  color: var(--turquoise);
+  /* --turquoise (--primary-500) is 3.16:1 as text on white and fails WCAG AA;
+     --text-link is the design system's token for teal text, at 4.70:1. The
+     border below stays --turquoise since it's decoration, not text. */
+  color: var(--text-link);
   text-decoration: none;
   border-left: 3px solid transparent;
   transition: color 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
 }
 
 .sidebar-link:hover {
-  color: var(--turquoise);
+  color: var(--text-link);
   background: var(--light-grey, #f4f6f8);
   border-left-color: var(--turquoise);
 }
