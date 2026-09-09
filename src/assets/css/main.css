@@ -46,7 +46,7 @@ body {
   padding: 0;
   font-family: var(--font-main) !important;
   color: var(--body-text);
-  background-color: #ffffff;
+  background-color: var(--surface-page);
   font-size: var(--size-body);
   line-height: 1.5;
   font-weight: 400;
@@ -86,7 +86,7 @@ body,
   flex: 0 0 var(--sidebar-width);
   border-right: 1px solid var(--border-grey-1);
   padding: 20px 0;
-  background: #ffffff;
+  background: var(--surface-page);
 }
 
 .content {
@@ -217,7 +217,7 @@ body,
 
 .sidebar-link:hover {
   color: var(--text-link);
-  background: var(--light-grey, #f4f6f8);
+  background: var(--light-grey);
   border-left-color: var(--turquoise);
 }
 
@@ -256,14 +256,14 @@ body,
   border: 1px solid var(--border-grey-1);
   border-radius: var(--radius);
   padding: 12px;
-  background-color: #ffffff;
+  background-color: var(--surface-page);
 }
 
 /* Filter panel — used by the Analytics page's dropdown filter. Just the box
    and heading style; the original multi-section/radio-group slicer layout
    isn't here, because nothing in this template uses more than one filter. */
 .slicer {
-  background-color: #ffffff;
+  background-color: var(--surface-page);
   border: 1px solid var(--border-grey-1);
   border-radius: var(--radius);
   padding: 12px;
@@ -305,9 +305,9 @@ body,
   --ag-font-family: var(--font-main);
   --ag-font-size: var(--size-body);
   --ag-foreground-color: var(--body-text);
-  --ag-background-color: #ffffff;
+  --ag-background-color: var(--surface-page);
   --ag-odd-row-background-color: var(--light-grey);
-  --ag-header-background-color: #ffffff;
+  --ag-header-background-color: var(--surface-page);
   --ag-header-foreground-color: var(--dark-grey);
   --ag-border-color: transparent;
   --ag-row-border-color: transparent;
@@ -363,7 +363,7 @@ body,
 .js-plotly-plot .modebar--horizontal {
   border: 1px solid var(--border-grey-1);
   border-radius: var(--radius);
-  background-color: #ffffff;
+  background-color: var(--surface-page);
 }
 
 /* --------------------------------------------------------------------------
@@ -378,7 +378,7 @@ img {
 input[type=submit],
 button {
   background-color: var(--turquoise);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
   min-height: 32px;
   width: 200px;
