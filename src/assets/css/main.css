@@ -118,7 +118,7 @@ body,
   display: flex;
   flex-direction: column;
   padding: 8px 18px 0;
-  background: #16191c;
+  background: #16191c; /* allow-hardcoded: mocks 4insight's own real header, not this app's design */
   font-size: 12px;
   letter-spacing: 0.02em;
 }
@@ -137,7 +137,7 @@ body,
 
 .mock-4insight-note {
   line-height: 22px;
-  color: #6b7075;
+  color: #6b7075; /* allow-hardcoded: mocks 4insight's own real header, not this app's design */
   /* quiet: it is a note to the developer, not part of the design */
 }
 
@@ -147,7 +147,7 @@ body,
   margin-top: 4px;
   font-size: 30px;
   line-height: 1.3;
-  color: #ffffff;
+  color: #ffffff; /* allow-hardcoded: mocks 4insight's own real header, not this app's design */
   font-weight: 700;
 }
 
@@ -167,7 +167,7 @@ body,
   font-size: 11px;
   line-height: 1;
   letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.55); /* allow-hardcoded: mocks 4insight's own real header, not this app's design */
   /* quiet: it is a note to the developer, not part of the design */
 }
 
@@ -314,8 +314,8 @@ body,
   --ag-borders: none;
   --ag-header-column-separator-display: none;
   --ag-header-column-resize-handle-display: none;
-  --ag-row-hover-color: rgba(0, 160, 176, 0.06);
-  --ag-selected-row-background-color: rgba(1, 43, 93, 0.06);
+  --ag-row-hover-color: rgba(0, 160, 176, 0.06); /* allow-hardcoded: alpha blend of --primary-500, no rgb-triplet token exists */
+  --ag-selected-row-background-color: rgba(1, 43, 93, 0.06); /* allow-hardcoded: alpha blend of --secondary-500, no rgb-triplet token exists */
   --ag-grid-size: 5px;
   border-top: 2px solid var(--dark-grey) !important;
 }
