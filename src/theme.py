@@ -12,7 +12,6 @@ figure built afterwards picks it up without asking.
 """
 
 import plotly.io as pio
-
 from foursubsea_design_system.theme_4insight import plotly_template
 
 TEMPLATE_NAME = "4subsea"
