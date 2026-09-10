@@ -3,50 +3,37 @@
    https://miro.com/app/board/uXjVHbD9HV0=/
    ========================================================================== */
 
+/* Colours, fonts and the base type/spacing tokens all come from the
+   4subsea-design-system package's colors_and_type.css (loaded as an external
+   stylesheet - see app.py). The names below are kept as a stable, app-local
+   vocabulary for this file - each just points at the design system's token,
+   so there is one place any of these values is actually written. Sizes
+   follow theme_4insight.py's two-size-by-role split (FS_SMALL / FS_TITLE)
+   rather than the old five-step ladder, so this file's chrome text matches
+   the Plotly figures'. */
 :root {
-  /* FONT */
-  --font-main: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
+  --font-main: var(--font-sans);
 
-  /* COLORS, UI */
-  --border-grey-1: #e6e6e6;
-  --border-grey-2: #d2d3ce;
-  --light-grey: #f8f9fa;
-  --grey: #a8a9a5;
-  --dark-grey: #7e7f7c;
-  --dark-blue: #012b5d;
-  --turquoise: #00a0b0;
-  --body-text: #002023;
+  --border-grey-1: var(--surface-border);
+  --border-grey-2: var(--gray-500);
+  --light-grey: var(--surface-muted);
+  --grey: var(--gray-600);
+  --dark-grey: var(--gray-700);
+  --dark-blue: var(--secondary-500);
+  --turquoise: var(--primary-500);
+  --body-text: var(--text-body);
 
-  /* COLORS, data (use them in this order) */
-  --data-1: #012b5d;
-  --data-2: #00a0b0;
-  --data-3: #f3776f;
-  --data-4: #feb272;
-  --data-5: #a8a9a5;
-  --data-6: #87d8f8;
-  --data-7: #bdf4eb;
-  --data-8: #8e00b0;
-  --data-9: #716fb3;
-  --data-10: #95b000;
-
-  /* TYPE SCALE — guide sizes are points, rendered here at 1.6x as pixels.
-     Keep in step with SCALE in theme.py. */
-  --size-axis-value: 13px;
-  /*  8 */
-  --size-axis-title: 14px;
-  /*  9 */
-  --size-table-head: 14px;
-  /*  9 */
-  --size-body: 16px;
-  /* 10 */
-  --size-title: 19px;
-  /* 12 */
-  --size-page-title: 34px;
+  /* TYPE SCALE */
+  --size-axis-title: var(--fs-small);
+  /* also table headers */
+  --size-table-head: var(--fs-small);
+  --size-body: var(--fs-body);
+  --size-title: var(--fs-h6);
+  /* visual titles, slicer headers, sidebar links */
 
   /* LAYOUT */
-  --gap: 16px;
+  --gap: var(--space-4);
   /* "two spaces between visuals" */
-  --radius: 4px;
   --max-width: 1800px;
   /* content stops filling very wide monitors */
   --narrow-width: 1100px;
@@ -59,7 +46,7 @@ body {
   padding: 0;
   font-family: var(--font-main) !important;
   color: var(--body-text);
-  background-color: #ffffff;
+  background-color: var(--surface-page);
   font-size: var(--size-body);
   line-height: 1.5;
   font-weight: 400;
@@ -99,7 +86,7 @@ body,
   flex: 0 0 var(--sidebar-width);
   border-right: 1px solid var(--border-grey-1);
   padding: 20px 0;
-  background: #ffffff;
+  background: var(--surface-page);
 }
 
 .content {
@@ -131,7 +118,7 @@ body,
   display: flex;
   flex-direction: column;
   padding: 8px 18px 0;
-  background: #16191c;
+  background: #16191c; /* allow-hardcoded: mocks 4insight's own real header, not this app's design */
   font-size: 12px;
   letter-spacing: 0.02em;
 }
@@ -150,7 +137,7 @@ body,
 
 .mock-4insight-note {
   line-height: 22px;
-  color: #6b7075;
+  color: #6b7075; /* allow-hardcoded: mocks 4insight's own real header, not this app's design */
   /* quiet: it is a note to the developer, not part of the design */
 }
 
@@ -160,7 +147,7 @@ body,
   margin-top: 4px;
   font-size: 30px;
   line-height: 1.3;
-  color: #ffffff;
+  color: #ffffff; /* allow-hardcoded: mocks 4insight's own real header, not this app's design */
   font-weight: 700;
 }
 
@@ -180,7 +167,7 @@ body,
   font-size: 11px;
   line-height: 1;
   letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.55); /* allow-hardcoded: mocks 4insight's own real header, not this app's design */
   /* quiet: it is a note to the developer, not part of the design */
 }
 
@@ -188,8 +175,8 @@ body,
    Headings
    -------------------------------------------------------------------------- */
 
-/* The page title lives in 4insight's header, not in the app. --size-page-title
-   is kept for anything that needs a large heading later. */
+/* The page title lives in 4insight's header, not in the app - nothing here
+   needs a page-title-sized heading. */
 
 /* Footnote under a visual: small, dark grey, sits inside the visual border */
 .footnote {
@@ -219,15 +206,18 @@ body,
   padding: 9px 18px 9px 15px;
   font-size: var(--size-title);
   line-height: 1.25;
-  color: var(--turquoise);
+  /* --turquoise (--primary-500) is 3.16:1 as text on white and fails WCAG AA;
+     --text-link is the design system's token for teal text, at 4.70:1. The
+     border below stays --turquoise since it's decoration, not text. */
+  color: var(--text-link);
   text-decoration: none;
   border-left: 3px solid transparent;
   transition: color 0.12s ease, border-color 0.12s ease, background-color 0.12s ease;
 }
 
 .sidebar-link:hover {
-  color: var(--turquoise);
-  background: var(--light-grey, #f4f6f8);
+  color: var(--text-link);
+  background: var(--light-grey);
   border-left-color: var(--turquoise);
 }
 
@@ -266,14 +256,14 @@ body,
   border: 1px solid var(--border-grey-1);
   border-radius: var(--radius);
   padding: 12px;
-  background-color: #ffffff;
+  background-color: var(--surface-page);
 }
 
 /* Filter panel — used by the Analytics page's dropdown filter. Just the box
    and heading style; the original multi-section/radio-group slicer layout
    isn't here, because nothing in this template uses more than one filter. */
 .slicer {
-  background-color: #ffffff;
+  background-color: var(--surface-page);
   border: 1px solid var(--border-grey-1);
   border-radius: var(--radius);
   padding: 12px;
@@ -315,17 +305,17 @@ body,
   --ag-font-family: var(--font-main);
   --ag-font-size: var(--size-body);
   --ag-foreground-color: var(--body-text);
-  --ag-background-color: #ffffff;
+  --ag-background-color: var(--surface-page);
   --ag-odd-row-background-color: var(--light-grey);
-  --ag-header-background-color: #ffffff;
+  --ag-header-background-color: var(--surface-page);
   --ag-header-foreground-color: var(--dark-grey);
   --ag-border-color: transparent;
   --ag-row-border-color: transparent;
   --ag-borders: none;
   --ag-header-column-separator-display: none;
   --ag-header-column-resize-handle-display: none;
-  --ag-row-hover-color: rgba(0, 160, 176, 0.06);
-  --ag-selected-row-background-color: rgba(1, 43, 93, 0.06);
+  --ag-row-hover-color: rgba(0, 160, 176, 0.06); /* allow-hardcoded: alpha blend of --primary-500, no rgb-triplet token exists */
+  --ag-selected-row-background-color: rgba(1, 43, 93, 0.06); /* allow-hardcoded: alpha blend of --secondary-500, no rgb-triplet token exists */
   --ag-grid-size: 5px;
   border-top: 2px solid var(--dark-grey) !important;
 }
@@ -373,7 +363,7 @@ body,
 .js-plotly-plot .modebar--horizontal {
   border: 1px solid var(--border-grey-1);
   border-radius: var(--radius);
-  background-color: #ffffff;
+  background-color: var(--surface-page);
 }
 
 /* --------------------------------------------------------------------------
@@ -388,7 +378,7 @@ img {
 input[type=submit],
 button {
   background-color: var(--turquoise);
-  color: #ffffff;
+  color: var(--text-inverse);
   border: none;
   min-height: 32px;
   width: 200px;
