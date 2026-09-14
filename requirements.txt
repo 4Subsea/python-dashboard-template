@@ -12,3 +12,9 @@ plotly>=6.0
 pandas>=2.2
 
 python-dotenv>=1.0
+
+# Design tokens, fonts and the Plotly theme (theme.py, assets/css/main.css).
+# Imports as `foursubsea_design_system` - see theme.py.
+# TODO: pinned to the packaging-test branch while that's under test - switch
+# back to @main (or drop the @ref entirely) once it's merged.
+git+https://github.com/4Subsea/4subsea-design-system.git

@@ -12,6 +12,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # checkout's own GITHUB_TOKEN credential, once persisted, matches
+          # any github.com URL and overrides the DESIGN_ACCESS_TOKEN below.
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         with:
@@ -20,6 +24,13 @@ jobs:
           cache-dependency-path: |
             requirements.txt
             requirements-dev.txt
+
+      - name: Configure git auth for private design-system repo
+        env:
+          DESIGN_ACCESS_TOKEN: ${{ secrets.DESIGN_ACCESS_TOKEN }}
+        run: |
+          echo "token length: ${#DESIGN_ACCESS_TOKEN}"
+          git config --global url."https://x-access-token:${DESIGN_ACCESS_TOKEN}@github.com/".insteadOf "https://github.com/"
 
       - name: Install
         run: |

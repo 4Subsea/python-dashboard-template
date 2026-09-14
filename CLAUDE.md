@@ -2,7 +2,7 @@
 python-dashboard-template/
 ├── src/
 │   ├── app.py             # Main application file
-│   ├── theme.py            # Colours, type scale and the Plotly template
+│   ├── theme.py            # Registers the Plotly template from the foursubsea_design_system package
 │   ├── memory_log.py       # Opt-in dev aid: prints RSS memory to the terminal, see LOG_MEMORY
 │   ├── assets/            # Static files (CSS, images, sample data)
 │   └── pages/             # One module per page, each with dash.register_page
@@ -42,7 +42,7 @@ python-dashboard-template/
 
 ## Layout and Styling
 - **Custom Style Sheets**: For external stylesheets and CSS files, put core layout styles, layout grids, and structural overrides into custom files inside the `assets/` directory.
-- **Theme File**: Use a shared `theme.py` or `theme.js` containing color constants, spacing scales, and font definitions to pass values systematically.
+- **Theme File**: Colors, type scale and spacing come from the `foursubsea_design_system` pip package, not from constants defined in this repo. `theme.py` only registers the package's Plotly template as Plotly's default on import; CSS consumes the same tokens as custom properties from the package's `colors_and_type.css` (served by `app.py`, referenced via `var(--...)` in `assets/css/main.css`); Python code that needs a raw value (e.g. for a conditional format) reads it from `foursubsea_design_system.theme_4insight`. Never hardcode a color or font in `src/` — `tests/test_style_tokens.py` enforces this, with `allow-hardcoded: <reason>` as the documented escape hatch.
 - **Inline Styles**: Use inline Python dictionaries (`style={"marginRight": "10px"}`) only for highly dynamic, runtime-computed values (e.g., styling a component color based on a callback threshold). Avoid static inline styling blocks as much as possible.
 - **Code Format**: Run `black` for Python formatting and Prettier for CSS formatting.
 

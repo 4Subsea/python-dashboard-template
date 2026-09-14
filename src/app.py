@@ -11,11 +11,23 @@ import pathlib
 
 import dash
 import dash_bootstrap_components as dbc
+import flask
 from dash import Dash, Input, Output, callback, dcc, html
 from dotenv import load_dotenv
+from foursubsea_design_system import theme_4insight
 
 import memory_log
 import theme  # registers the "4subsea" Plotly template
+
+# The design system ships its CSS and fonts inside the installed package
+# (see requirements.txt), not under assets/, so Dash's automatic assets-folder
+# serving can't reach them. This route serves them straight from wherever pip
+# put the package - no copying, always the version that's actually installed.
+# foursubsea_design_system itself has no __file__ (it's an implicit namespace
+# package - package-dir maps it straight onto the design system's repo root,
+# see that repo's pyproject.toml), so locate it via a real module inside it.
+DESIGN_SYSTEM_DIR = pathlib.Path(theme_4insight.__file__).resolve().parent
+DESIGN_SYSTEM_URL_PREFIX = "/design-system"
 
 PAGE_TITLE = "Dashboard Template"
 
@@ -32,10 +44,15 @@ LOG_MEMORY = os.getenv("LOG_MEMORY", "false").strip().lower() == "true"
 app = Dash(
     __name__,
     use_pages=True,
-    external_stylesheets=[dbc.themes.BOOTSTRAP],
+    external_stylesheets=[dbc.themes.BOOTSTRAP, f"{DESIGN_SYSTEM_URL_PREFIX}/colors_and_type.css"],
     suppress_callback_exceptions=True,  # Set true for multi-page apps to avoid raising exceptions.
     title=PAGE_TITLE,
 )
+
+
+@app.server.route(f"{DESIGN_SYSTEM_URL_PREFIX}/<path:filename>")
+def design_system_static(filename):
+    return flask.send_from_directory(DESIGN_SYSTEM_DIR, filename)
 
 
 def nav_bar(pathname):

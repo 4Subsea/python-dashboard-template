@@ -48,7 +48,7 @@ edit it; `.env` is gitignored):
 ```
 src/
 ├── app.py            Dash shell: side navigation, mock 4insight header
-├── theme.py          colours, type scale and the Plotly template
+├── theme.py          registers the Plotly template from the design-system package
 ├── memory_log.py     dev aid: prints RSS memory usage, see LOG_MEMORY
 ├── pages/
 │   ├── introduction.py  landing page: revision log AgGrid and a free-text notes box
@@ -100,19 +100,29 @@ default.
 
 ## Styling / theming
 
-Colours, fonts and spacing live in two places that must be kept in step:
+Colours, fonts and spacing are not defined in this repo — they live in the
+`foursubsea-design-system` pip package (installed via `requirements.txt`,
+imported as `foursubsea_design_system`), which is the single source of
+truth. Two things in `src/` consume it:
 
-- `src/theme.py` — the single source of truth as Python constants
-  (`UI_COLORS`, `COLORS`, font sizes). Importing it registers a Plotly
-  template as the default, so any figure built anywhere in the app picks up
-  the palette and typography automatically — no chart-by-chart styling.
-- `src/assets/css/main.css` — the same palette and type scale as CSS custom
-  properties, used for page chrome, the sidebar, the mock header, and AgGrid's
-  theme variables (AgGrid isn't a Plotly figure, so it reads the CSS
-  variables rather than `theme.py` directly).
+- `src/theme.py` — imports `foursubsea_design_system.theme_4insight`'s
+  Plotly template and registers it as Plotly's default on import, so any
+  figure built anywhere in the app picks up the palette and typography
+  automatically — no chart-by-chart styling. It also re-exports `COLORS`
+  (read back from the registered template) for tests to assert against.
+- `src/assets/css/main.css` — the same tokens as CSS custom properties,
+  loaded from the package's `colors_and_type.css` (served by `app.py` at
+  `/design-system/...`, since the package ships its assets inside itself
+  rather than under `assets/`). `main.css` only ever points app-local
+  variable names (`--dark-blue`, `--size-title`, ...) at the design system's
+  own tokens (`--secondary-500`, `--fs-h6`, ...) — it never hardcodes a
+  value itself.
 
-If you change `theme.py`'s `SCALE` or a size constant, change the matching
-`--size-*` variable in `main.css` too — nothing enforces this automatically.
+Any Python code that needs a raw value (e.g. a conditional-formatting
+threshold) should read it from `foursubsea_design_system.theme_4insight`
+rather than hardcoding it. `tests/test_style_tokens.py` enforces that no
+hardcoded color or font-family sneaks into `src/`'s CSS or Python; a
+deliberate exception needs an inline `allow-hardcoded: <reason>` comment.
 
 ## Sample data
 
@@ -131,8 +141,10 @@ pytest
 Covers page registration, that each page's layout builds, that every
 callback's component IDs actually exist in its page, the mock header (absent
 by default, carries the logo, placeholder title and spacer note when
-configured), and that the analytics chart actually renders through the
-"4subsea" Plotly theme rather than silently falling back to Plotly's default.
+configured), that the analytics chart actually renders through the
+"4subsea" Plotly theme rather than silently falling back to Plotly's default,
+and that no hardcoded color or font-family has crept into `src/`'s CSS or
+Python outside of a documented `allow-hardcoded` exception.
 
 ## Contributing
 
