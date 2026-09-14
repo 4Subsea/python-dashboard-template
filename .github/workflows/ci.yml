@@ -26,8 +26,11 @@ jobs:
             requirements-dev.txt
 
       - name: Configure git auth for private design-system repo
+        env:
+          DESIGN_ACCESS_TOKEN: ${{ secrets.DESIGN_ACCESS_TOKEN }}
         run: |
-          git config --global url."https://x-access-token:${{ secrets.DESIGN_ACCESS_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          echo "token length: ${#DESIGN_ACCESS_TOKEN}"
+          git config --global url."https://x-access-token:${DESIGN_ACCESS_TOKEN}@github.com/".insteadOf "https://github.com/"
 
       - name: Install
         run: |
