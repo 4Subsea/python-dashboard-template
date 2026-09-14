@@ -12,6 +12,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # checkout's own GITHUB_TOKEN credential, once persisted, matches
+          # any github.com URL and overrides the DESIGN_ACCESS_TOKEN below.
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         with:
